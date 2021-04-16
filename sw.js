@@ -1,5 +1,5 @@
-const staticCacheName = 'site-static-v1.1';
-const dynamicCacheName = 'site-dynamic-v1.1';
+const staticCacheName = 'site-static-v1.11';
+const dynamicCacheName = 'site-dynamic-v1.11';
 const assets = [
   './',
   './index.html',
@@ -55,6 +55,7 @@ self.addEventListener('fetch', evt => {
   if(evt.request.url.indexOf('firestore.googleapis.com') === -1){
     evt.respondWith(
       caches.match(evt.request).then(cacheRes => {
+        console.log(evt.request);
         return cacheRes || fetch(evt.request).then(fetchRes => {
           return caches.open(dynamicCacheName).then(cache => {
             cache.put(evt.request.url, fetchRes.clone());
