@@ -1,3 +1,6 @@
+const addMsg  = document.querySelector('#addMessage');
+const addBtn  = document.querySelector('#addBtn');
+
 // enable offline data
 db.enablePersistence()
   .catch(function(err) {
@@ -18,7 +21,7 @@ db.collection('recipes').onSnapshot(snapshot => {
     }
     if(change.type === 'removed'){
       // remove the document data from the web page
-      console.log("data removed");
+      removeRecipe(change.doc.id);
     }
   });
 });
@@ -38,4 +41,19 @@ form.addEventListener('submit', evt => {
 
   form.title.value = '';
   form.ingredients.value = '';
+  
+  addMsg.innerHTML='Recipe is added, add another recipe.';
+  addBtn.style.backgroundColor = '#FF8816';
 });
+
+// delte a recipe
+const recipeContainer = document.querySelector('.recipes');
+recipeContainer.addEventListener('click', evt => {
+  console.log(evt);
+  if (evt.target.tagName == 'I') {
+    const id = evt.target.getAttribute('data-id');
+    db.collection('recipes').doc(id).delete();
+  }
+}); 
+
+
