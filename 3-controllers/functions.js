@@ -55,11 +55,12 @@ function toRad(Value)
 
 function readCourses(){
   //console.log("call API to Read Database");
-  userName = decodeURI(displayName[1]);
+  //userName = decodeURI(displayName[1]);
 
   courseData = JSON.parse(courseDataStr);
   courseHistory = JSON.parse(courseHistoryStr);
   courseMember = JSON.parse(courseMemberStr);
+  userId = "userId=U8570ed5006325d504933612308d0fddf".split("=");
   
   notInCourse=[];
   inCourse=[];
@@ -285,22 +286,26 @@ function callAPI(param, loadingMessage) {
 async function checkUserIdExist() {
   //Call API:00 檢查 userId 有沒有重複參加 */
 
-  $.loading.start('檢查是否已填寫必要資料');
-  paramToSend = "?API=14" + "&UserId=" + userId[1];
-  var res = await callAPI(paramToSend, '檢查是否已填寫必要資料');
-  $.loading.end();
+  loadCourses = true;
+  getCourseData(navDataSource);
+  getCourseHistory(courseHistorySource);
   
-  var res ="";
-  if (res.substring(0,6) == "API:14") {
-    alert("為了讓您更容易使用團體課程，挑戰賽及使用優惠券，請填寫必要資料");
-    $("#formUserName").val(decodeURI(displayName[1]));
-    $("#formUserName").attr("disabled", "disabled"); 
-    $("#LINE頭像").attr("src", pictureUrl[1]);
-    已經是會員 = false;
-    app.navigate('#forms');
-  } else {
-    console.log("前往團課");
-    已經是會員 = true;
+//  $.loading.start('檢查是否已填寫必要資料');
+//  paramToSend = "?API=14" + "&UserId=" + userId[1];
+//  var res = await callAPI(paramToSend, '檢查是否已填寫必要資料');
+//  $.loading.end();
+//  
+//  var res ="";
+//  if (res.substring(0,6) == "API:14") {
+//    alert("為了讓您更容易使用團體課程，挑戰賽及使用優惠券，請填寫必要資料");
+//    $("#formUserName").val(decodeURI(displayName[1]));
+//    $("#formUserName").attr("disabled", "disabled"); 
+//    $("#LINE頭像").attr("src", pictureUrl[1]);
+//    已經是會員 = false;
+//    app.navigate('#forms');
+//  } else {
+//    console.log("前往團課");
+//    已經是會員 = true;
     
 //    var userProfile = JSON.parse(res);
 //    //console.log(userProfile);
@@ -318,10 +323,10 @@ async function checkUserIdExist() {
 //    
 //    $("#LINE頭像").attr("src", userProfile[7]);
     
-    loadCourses = true;
-    getCourseData(navDataSource);
-    getCourseHistory(courseHistorySource);    
-  }
+//    loadCourses = true;
+//    getCourseData(navDataSource);
+//    getCourseHistory(courseHistorySource);    
+//  }
 }
 
 async function 註冊會員() {
