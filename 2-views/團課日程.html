@@ -428,8 +428,9 @@
 
       request.onload = function() {
         var responseMsg = JSON.parse(this.response);
-        console.log(responseMsg);         
-        $("#課表圖片").attr("src", responseMsg);
+        console.log("aaa",responseMsg);         
+        //$("#課表圖片").attr("src", responseMsg);
+        $("#課表圖片").attr("src", "https://i.imgur.com/1sot1z0.jpg");
       } 
       request.send();        
     }

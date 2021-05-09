@@ -94,17 +94,17 @@ courseHistorySource = new kendo.data.DataSource({
 searchDataSource = navDataSource;
 
 function getCourseData(data) {
-  console.log("getting data");
+  console.log("prepare data for CourseListView");
   
   if (loadCourses == false) return 1;
   
-  allDataReady = 0;
+//  allDataReady = 0;
   readCourses();
 
-  var checkDataReady = setInterval(function(){
-    if (allDataReady==4) {
-      //console.log(inCourse, courseData);
-      clearInterval(checkDataReady);
+//  var checkDataReady = setInterval(function(){
+//    if (allDataReady==4) {
+//      //console.log(inCourse, courseData);
+//      clearInterval(checkDataReady);
       //console.log("Set up data for listview")
       var dataTemp =[];
       inCourse.forEach(function(course, index, array){
@@ -147,19 +147,18 @@ function getCourseData(data) {
         });
       });
    
-      console.log(dataTemp.length);
-      data.success(dataTemp);      
+      console.log(dataTemp, length);
+      data.success(dataTemp); 
       
       if (dataTemp.length==0) {
         $("#報名課程title").text("尚無報名課程");
       }else {
         $("#報名課程title").text("已報名課程");
-      }      
-
-    }
-    
-  }, 100);
-
+      }    
+//    }
+//    
+//  }, 100);
+  
 }
 
 function getCourseHistory(data) {
@@ -167,11 +166,11 @@ function getCourseHistory(data) {
   
   if (loadCourses == false) return 1;
 
-  var checkDataReady = setInterval(function(){
-    //console.log("in history", allDataReady);
-    if (allDataReady==4) {
-      clearInterval(checkDataReady);
-      //console.log("in xxx", myHistory)
+//  var checkDataReady = setInterval(function(){
+//    //console.log("in history", allDataReady);
+//    if (allDataReady==4) {
+//      clearInterval(checkDataReady);
+//      //console.log("in xxx", myHistory)
       var dataTemp =[];
       myHistory.forEach(function(course, index, array){
         console.log(course);
@@ -193,19 +192,18 @@ function getCourseHistory(data) {
         });
       });
    
-      //console.log(dataTemp);
-      data.success( dataTemp);  
+      data.success(dataTemp);  
       
       if (dataTemp.length==0) {
         $("#參加過課程title").text("尚無參加過課程");
       }else {
         $("#參加過課程title").text("參加過課程");
       }      
-      
-    }
-    
-  }, 100);
-
+//      
+//    }
+//    
+//  }, 100);
+ 
 }
 
 

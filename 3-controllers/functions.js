@@ -54,52 +54,86 @@ function toRad(Value)
 }
 
 function readCourses(){
-  console.log("call API to Read Database");
+  //console.log("call API to Read Database");
   userName = decodeURI(displayName[1]);
 
-  var checkDataReady = setInterval(function(){ 
-    //console.log("aaa", allDataReady);
-    if (allDataReady==4) {
-      clearInterval(checkDataReady);
-      //console.log("Data is ready", courseData);
-      //alert("Data is ready");
-      $.loading.end();
-      notInCourse=[];
-      inCourse=[];
-      myHistory=[];     
-      var attended=false;
-      var isNow=false;
-      var inHistory=false; 
-      courseMember.forEach(function(course, index, array){  
-        attended = false;        
-        for (var i=1; i<course.length;i++) {
-          if (course[i][3] == userId[1]) {              
-            //console.log(course[0],userName, "已參加")
-            attended = true;
-          }
-        };
+  courseData = JSON.parse(courseDataStr);
+  courseHistory = JSON.parse(courseHistoryStr);
+  courseMember = JSON.parse(courseMemberStr);
+  
+  notInCourse=[];
+  inCourse=[];
+  myHistory=[];     
+  var attended=false;
+  var isNow=false;
+  var inHistory=false; 
+  courseMember.forEach(function(course, index, array){  
+    attended = false;        
+    for (var i=1; i<course.length;i++) {
+      if (course[i][3] == userId[1]) {              
+        //console.log(course[0],userName, "已參加")
+        attended = true;
+      }
+    };
 
-        isNow = false;
-        courseData.forEach(function(newCourse, index, array){
-          if (newCourse[0]==course[0]) isNow = true; 
-        });
+    isNow = false;
+    courseData.forEach(function(newCourse, index, array){
+      if (newCourse[0]==course[0]) isNow = true; 
+    });
 
-        inHistory = false;
-        courseHistory.forEach(function(oldCourse, index, array){
-          if (oldCourse[0]==course[0]) inHistory = true; 
-        });
+    inHistory = false;
+    courseHistory.forEach(function(oldCourse, index, array){
+      if (oldCourse[0]==course[0]) inHistory = true; 
+    });
 
-        if (!attended && isNow)     notInCourse.push(course[0]);
-        if (attended  && isNow)     inCourse.push(course[0]);        
-        if (attended  && inHistory) myHistory.push(course[0]);
-      });
-      //addCourseCards();
-    }
-  }, 100);
+    if (!attended && isNow)     notInCourse.push(course[0]);
+    if (attended  && isNow)     inCourse.push(course[0]);        
+    if (attended  && inHistory) myHistory.push(course[0]);
+  });
+  
+//  var checkDataReady = setInterval(function(){ 
+//    //console.log("aaa", allDataReady);
+//    if (allDataReady==4) {
+//      clearInterval(checkDataReady);
+//      //console.log("Data is ready", courseData);
+//      //alert("Data is ready");
+//      $.loading.end();
+//      notInCourse=[];
+//      inCourse=[];
+//      myHistory=[];     
+//      var attended=false;
+//      var isNow=false;
+//      var inHistory=false; 
+//      courseMember.forEach(function(course, index, array){  
+//        attended = false;        
+//        for (var i=1; i<course.length;i++) {
+//          if (course[i][3] == userId[1]) {              
+//            //console.log(course[0],userName, "已參加")
+//            attended = true;
+//          }
+//        };
+//
+//        isNow = false;
+//        courseData.forEach(function(newCourse, index, array){
+//          if (newCourse[0]==course[0]) isNow = true; 
+//        });
+//
+//        inHistory = false;
+//        courseHistory.forEach(function(oldCourse, index, array){
+//          if (oldCourse[0]==course[0]) inHistory = true; 
+//        });
+//
+//        if (!attended && isNow)     notInCourse.push(course[0]);
+//        if (attended  && isNow)     inCourse.push(course[0]);        
+//        if (attended  && inHistory) myHistory.push(course[0]);
+//      });
+//      //addCourseCards();
+//    }
+//  }, 100);
 
-  $.loading.start('讀取資料');
-  allDataReady = 0;
-  getDataByAPIs(checkDataReady);    
+  //$.loading.start('讀取資料');
+  //allDataReady = 0;
+  //getDataByAPIs(checkDataReady);    
 
 };
 
@@ -107,7 +141,7 @@ function getDataByAPIs(checkDataReady) {
   var request1, reuquest2, request3, request4;
   // call API:10 =========================================================================
   paramToSend = "?API=10";      
-  request1 = new XMLHttpRequest()
+  request1 = new XMLHttpRequest();
   if (useLocalAPIs) {
     request1.open('GET', 'http://localhost:5000' + paramToSend, true);
   } else {
@@ -116,7 +150,7 @@ function getDataByAPIs(checkDataReady) {
 
   request1.onload = function() {
     var responseMsg = this.response;
-
+    
     //responseMsg="API:10 courseData 讀取失敗"; //故意測試錯誤
     if (responseMsg != "API:10 courseData 讀取失敗") {
       courseData = JSON.parse(this.response);
@@ -256,6 +290,7 @@ async function checkUserIdExist() {
   var res = await callAPI(paramToSend, '檢查是否已填寫必要資料');
   $.loading.end();
   
+  var res ="";
   if (res.substring(0,6) == "API:14") {
     alert("為了讓您更容易使用團體課程，挑戰賽及使用優惠券，請填寫必要資料");
     $("#formUserName").val(decodeURI(displayName[1]));
@@ -267,21 +302,21 @@ async function checkUserIdExist() {
     console.log("前往團課");
     已經是會員 = true;
     
-    var userProfile = JSON.parse(res);
-    //console.log(userProfile);
-
-    $("#formUserName").val(userProfile[0]);
-    $("#formUserGender").val(userProfile[1]);     
-    $("#formUserBirth").val(userProfile[2]);
-    $("#formUserPhone").val(userProfile[3]);
-    $("#formUserID").val(userProfile[4]);
-    $("#formUserAddr").val(userProfile[5]);
-    $("#formUserHeight").val(userProfile[8]);
-    $("#formUserWeight").val(userProfile[9]);        
-    $("#formEmergencyContact").val(userProfile[10]);
-    $("#formEmergencyPhone").val(userProfile[11]);  
-    
-    $("#LINE頭像").attr("src", userProfile[7]);
+//    var userProfile = JSON.parse(res);
+//    //console.log(userProfile);
+//
+//    $("#formUserName").val(userProfile[0]);
+//    $("#formUserGender").val(userProfile[1]);     
+//    $("#formUserBirth").val(userProfile[2]);
+//    $("#formUserPhone").val(userProfile[3]);
+//    $("#formUserID").val(userProfile[4]);
+//    $("#formUserAddr").val(userProfile[5]);
+//    $("#formUserHeight").val(userProfile[8]);
+//    $("#formUserWeight").val(userProfile[9]);        
+//    $("#formEmergencyContact").val(userProfile[10]);
+//    $("#formEmergencyPhone").val(userProfile[11]);  
+//    
+//    $("#LINE頭像").attr("src", userProfile[7]);
     
     loadCourses = true;
     getCourseData(navDataSource);
