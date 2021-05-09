@@ -1,95 +1,331 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Food Ninja</title>
-  <!-- materialize icons, css & js -->
-  <link type="text/css" href="./css/materialize.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" href="./css/styles.css" rel="stylesheet">
-  <script type="text/javascript" src="./js/materialize.min.js"></script>
-  <link rel="manifest" href="./manifest.json">
-  <!-- ios support -->
-  <link rel="apple-touch-icon" href="./img/icons/icon-96x96.png">
-  <meta name="apple-mobile-web-app-status-bar" content="#FFE1C4">
-  <meta name="theme-color" content="#FFE1C4">
-</head>
-<body class="grey lighten-4">
-
-  <!-- top nav -->
-  <nav class="z-depth-0">
-    <div class="nav-wrapper container">
-      <a href="./">Food<span>Ninja</span></a>
-      <span class="right grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
-      </span>
-    </div>
-  </nav>
-
-  <!-- side nav -->
-  <ul id="side-menu" class="sidenav side-menu">
-    <li><a class="subheader">FOODNINJA</a></li>
-    <li><a href="./" class="waves-effect">Home</a></li>
-    <li><a href="./pages/about.html" class="waves-effect">About</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="./pages/contact.html" class="waves-effect">
-      <i class="material-icons">mail_outline</i>Contact</a>
-    </li>
-  </ul>
-
-  <!-- recipes -->
-  <div class="recipes container grey-text text-darken-1">
+<!--https://demos.telerik.com/kendo-ui/content/shared/js/mobile-examples.js-->
+<!--?displayName=小華&userId=U722be0c9c9d36e011c0e556bd2047819&pictureUrl=www.google.com-->
+<!--?displayName=小A&userId=U72Abe0c9c9d36e011c0e556bd2047819&pictureUrl=https://media.tractorsupply.com/is/image/TractorSupplyCompany/1305371?$456$-->
     
-  </div>
+<!DOCTYPE html>
+<html>
 
-  <div class="center">
-    <a class="btn-floating btn-small btn-large add-btn sidenav-trigger" data-target="side-form">
-      <i class="material-icons">add</i>
-    </a>
-  </div>
+<head>
+  <title></title>
+  <meta name="msapplication-tap-highlight" content="no" />
 
-  <!-- add recipe side nav -->
-  <div id="side-form" class="sidenav side-form">
-    <form class="add-recipe container section">
-      <h6 >New Recipe</h6>
-      <div class="divider"></div>
-      <div class="input-field">
-        <input placeholder="e.g. Ninja soup" id="title" type="text" class="validate">
-        <label for="title">Recipe Title</label>
-      </div>
-      <div class="input-field">
-        <input placeholder="e.g. Tofu, mushroom, garlic" id="ingredients" type="text" class="validate">
-        <label for="ingredients">Ingredients</label>
-      </div>
-      <div class="input-field center">
-        <button class="btn-small">Add</button>
-      </div>
-    </form>
-  </div>
+  <!--  using Noto Sans TC is added by Paul Kang-->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 
+  <link href="https://kendo.cdn.telerik.com/2020.1.114/styles/kendo.common-nova.min.css" rel="stylesheet" />
+  <link href="https://kendo.cdn.telerik.com/2020.1.114/styles/kendo.nova.min.css" rel="stylesheet" />
+  <link href="https://kendo.cdn.telerik.com/2020.1.114/styles/kendo.mobile.nova.min.css" rel="stylesheet" />   
+
+  <link href="css/courseStyle.css" rel="stylesheet" />
+     
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2020.1.114/js/kendo.all.min.js"></script>
+  <script src="https://kendo.cdn.telerik.com/2020.1.114/js/kendo.timezones.min.js"></script>
   
+  <link rel="stylesheet" href="css/loading.css" />
+  <script src="js/loading.js"></script>    
+</head>
+
+<body id="body">
+  <!-- Google Tag Manager -->
+  <!-- remarked by Paul Kang
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+    </noscript>
+    <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+  -->
+  <!-- End Google Tag Manager -->
+
+  <!-- 
+    若設  data-use-native-scrolling="true"，則 非 mobile mode 可以捲動，但 mobile mode 顯示有問題。
+    若沒設 data-use-native-scrolling="true"，則 非 mobile mode 無法捲動，但 mobile mode 正常可捲動。
+    -->
+
+  <style>
+  
+    .km-on-ios  .km-list > li {
+        background-color: rgb(250,250,250);
+        border-radius:10px;
+        margin: 10px;
+    }
+
+    
+    .km-on-ios .km-header .km-navbar
+    /* for data-title="北大林口中心團課" */
+    {
+      background-color: coralbl;
+      /* deeppink; */
+      font-size: 18px;
+    }
+
+    .km-on-ios .km-header .km-widget,
+    .km-on-ios .km-header .km-view-title {
+      color: white;
+    }
+
+    .NotoSansFont {
+      font-family: 'Noto Sans TC'; 
+    }
+    
+    .報名課程title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-left: 15px;
+
+    }
+
+    .課程名稱 {
+      font-size: 18px;
+      margin-left: 15px;
+
+    }
+    
+    #calendar,
+    #calendar .k-calendar-view,
+    #calendar .k-content {
+        width: 100%;
+    }    
+  </style>
+
+  <div id="errorMessage" style="display: none; margin-top: 2em; color: red; font-weight: bold" align="center">
+    <h3 class="NotoSansFont" style="margin-top: 2em; color: red; font-weight: bold">輸入參數發生錯誤，請洽管理員</h3>
+  </div>
+    
+  <div data-role="view" data-title="我的團課" style="font-family: 'Noto Sans TC'" id="courseDiv" data-layout="" data-show="nullForNow" data-init="initSearch">
+    <header data-role="header">
+      <div data-role="navbar" id="normal" class="km-accent">
+
+        <a data-align="right" data-role="button" href="#forms" data-rel="" data-icon="contacts"></a>
+        
+        <span data-role="view-title"></span>
+        
+<!--        <span class="km-view-subtitle"></span>-->
+<!--        <a data-align="left" data-role="button" data-click="showSearch" data-click-on="down" data-icon="search"></a>-->
+     
+      </div>
 <!--
-  <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase-firestore.js"></script>  
+      <div data-role="navbar" id="search" class="navbar-hidden">
+        <div data-align="right" id="demos-search-container" data-align="right">
+          <input type="search" id="demos-search" />
+        </div>
+      </div>
 -->
-  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+    </header>
+
+    <ul data-role="listview" data-type="group" style="margin-top: -25px" >
+      <li >
+        <ul>
+          <li style="padding: 0px; margin:0px;margin-top: -10px; border-radius: 0px; background-color: white" >
+            <ul data-role="buttongroup" data-index="0" data-select="切換課程">
+              <li style="width: 20%; border-radius: 0px;" >已報名課程</li>
+              <li style="width: 20%; border-radius: 0px;">參加過課程</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+       
+    <div id="已報名課程Div">       
+      <div style="height: 15px"></div>
+<!--      <span class="報名課程title">報名新課程</span>-->
+      <a class="reply km-primary km-button-left" href="#2-views/團課日程.html" style="font-size: 18px; color: white; margin-left: 10px; " data-role="button" onclick="">報名課程</a>
+      <div style="height: 20px"></div>
+
+      <br><br>
+      <hr>
+
+      <div style="height: 15px"></div>
+      <span id="報名課程title" class="報名課程title">已報名課程</span>
+      <div style="height: 15px"></div>
+
+      <ul data-role="listview" data-source="navDataSource" data-pull-to-refresh="true" data-template="nav-template" data-header-template="header-template" class="main-menu">
+
+        <script type="text/x-kendo-template" id="header-template">
+          <span class="km-icon km-#: value #"></span> #: value #
+          </script>
+
+        <script type="text/x-kendo-template" id="nav-template">
+          <a href="#: url #" class="課程名稱">
+            <p style="font-size:16px; color: #: 繳費狀況顏色 #; border-width:2px; border-radius:5px;border-color:#: 繳費狀況顏色 # ; border-style:solid; float:right; margin-right:30px;padding-left:5px;padding-right:5px">#: 繳費狀況 # </p>
+            
+            <img src="#: 課程圖片 #" width="70" height="70" style="float:left;margin-right:10px"/>          
+            <p style="font-size:12px; color: gray; margin-top:-8px"> #: 課程編號 # </p>
+            <p style="font-size:16px; color: darkslategray; margin-top:-10px; font-weight:bold">#: 課程名稱 # </p>
+            <p style="font-size:12px; color: gray; margin-top:-10px">#: 老師時間 # </p>
+            <p style="font-size:12px; color: gray; margin-top:-10px;margin-bottom:-35px">#: 課程費用 # </p>            
+          </a>
+        </script>
+
+      </ul>
+    </div>
+
+     <div id="參加過課程Div">
+      <div style="height: 15px"></div>
+      <span id="參加過課程title" class="報名課程title">參加過課程</span>
+      <div style="height: 15px"></div>
+
+      <ul data-role="listview" data-source="courseHistorySource" data-pull-to-refresh="false" data-template="nav-template" data-header-template="header-template" class="main-menu">
+
+        <script type="text/x-kendo-template" id="header-template">
+          <span class="km-icon km-#: value #"></span> #: value #
+          </script>
+
+        <script type="text/x-kendo-template" id="nav-template">
+          <a href="#: url #" class="課程名稱">
+            <img src="#: 課程圖片 #" width="70" height="70" style="float:left;margin-right:10px"/>          
+            <p style="font-size:12px; color: gray; margin-top:-8px"> #: 課程編號 # </p>
+            <p style="font-size:16px; color: darkslategray; margin-top:-10px; font-weight:bold">#: 課程名稱 # </p>
+            <p style="font-size:12px; color: gray; margin-top:-10px">#: 老師時間 # </p>
+            <p style="font-size:12px; color: gray; margin-top:-10px;margin-bottom:-35px">#: 課程費用 # </p>            
+          </a>
+        </script>
+
+      </ul>
+    </div>        
+    
+    <h2 id="deleteMe"></h2>
+
+  </div>
+  
+  <div id="forms" data-role="view" data-title="個人資料" data-init="initForm" data-use-native-scrolling="true" style="font-family: 'Noto Sans TC'">
+<!--
+    <header data-role="header">
+      <div data-role="navbar" id="normal" class="km-accent">
+        <span data-role="view-title"></span>
+      </div>
+    </header>
+-->
+    <img id="LINE頭像" src="" class="km-thumbnail" style="width: 10em; height: 10em; margin: 1em auto; display: block; float: none;"/>
+       
+<!--    <div style="margin: 1em;" >* 表示必填欄位</div>-->
+    <ul data-role="listview" data-style="inset">
+      <li>
+        <label class="km-label-above">姓名
+            <input id="formUserName" type="text" class="NotoSansFont"/>
+        </label>
+      </li>
+      <li>
+        <label class="km-label-above">性別(必填，Inbody 量測需要)
+          <select id="formUserGender"  name="option" class="NotoSansFont">
+            <option value="男">男</option>
+            <option value="女">女</option>
+          </select>
+        </label>
+      </li>
+      <li>
+        <label class="km-label-above">生日(必填，Inbody 量測需要，格式:1996-06-06)
+          <input id="formUserBirth" class="NotoSansFont" type="text"/> 
+        </label> 
+      </li>      
+      <li>
+        <label class="km-label-above">身高(必填，Inbody 量測需要)
+          <input id="formUserHeight" class="NotoSansFont" type="text" placeholder="例如: 180"/> 
+        </label> 
+        <span style="float:left ;margin-bottom: -1em; margin-top: -10px; margin-left: 5em">cm</span>
+      </li> 
+      <li>
+        <label class="km-label-above">體重(必填，Inbody 量測需要)
+          <input id="formUserWeight" class="NotoSansFont" type="text" placeholder="例如: 50"/> 
+        </label> 
+        <span style="float:left ;margin-bottom: -1em; margin-top: -10px; margin-left: 5em">kg</span>
+      </li>
+      <li>
+        <label class="km-label-above">電話(必填，聯絡使用)
+          <input id="formUserPhone" class="NotoSansFont" type="text"/> 
+        </label> 
+      </li>
+      <li>
+        <label class="km-label-above">身分證號(必填，作為會員身份辨識，不用做其他用途)
+          <input id="formUserID" class="NotoSansFont" type="text"/> 
+        </label> 
+      </li>
+      <li>
+        <label class="km-label-above">緊急連絡人(必填，緊急聯絡使用)
+          <input id="formEmergencyContact" class="NotoSansFont" type="text"/> 
+        </label> 
+      </li>
+      <li>
+        <label class="km-label-above">緊急連絡電話(必填，緊急聯絡使用)
+          <input id="formEmergencyPhone" class="NotoSansFont" type="text"/> 
+        </label> 
+      </li>
+      <li>
+        <label class="km-label-above">地址(建議填寫，聯絡使用)
+          <input id="formUserAddr" class="NotoSansFont" type="text"/> 
+        </label> 
+      </li>                                                     
+    </ul>
+    <div align="center">
+      <a data-role="button" class="km-primary" style="color: white; margin:1em; padding-left:3em; padding-right:3em" onclick="更新資料()" >更新資料</a>
+    </div>
+    
+  </div>  
+
+  <div data-id="courseDiv" data-role="layout" data-show="showDemoLayout" data-hide="removeView">
+    <header data-role="header">
+      <div data-role="navbar" class="km-accent">
+        <a data-align="left" data-icon="arrow-w" href="#/" data-role="backbutton" data-transition="slide reverse"></a>
+        <span data-role="view-title"></span>
+        <!--        <a data-align="right" id="source-code-button" data-icon="source-code" data-click="goToSourceCode" data-role="button" title="Show this demo source code">Source Code</a>-->
+      </div>
+    </header>
+  </div>
+
+<!--  <script src="js/example-datasources.js"></script>-->
+  <script src="3-controllers/functions.js"></script>
+  <script src="1-models/data-process.js"></script>
+  <script src="js/prettify.js"></script> 
+  
   <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyD8mQa6xLEwZZ-lxM8C4B2UJivYhERAgvA",
-      authDomain: "pwa-rizap-chat.firebaseapp.com",
-      projectId: "pwa-rizap-chat",
-      storageBucket: "pwa-rizap-chat.appspot.com",
-      messagingSenderId: "1098354166234",
-      appId: "1:1098354166234:web:7589d94d6093080e2d18e3"
-    };
-    firebase.initializeApp(config);
-    const db = firebase.firestore();
+    // 中光電竹南廠
+    var 場所位置1緯度=  24.7118; 
+    var 場所位置1經度= 120.9162;
+
+    //新竹市東區中央路160號
+    var 場所位置2緯度=  24.807699;
+    var 場所位置2經度= 120.972103;
+    
+    //北大運動場
+    var 場所位置緯度=   24.940216;
+    var 場所位置經度=  121.365881;
+    
+    var 目前位置緯度;
+    var 目前位置經度;
+          
+    var paramToSend = "";
+    var inputParamString = location.search;
+    var inputParam = inputParamString.split("&");
+    var displayName, userId, pictureUrl;
+    var inputError = false;
+    var useLocalAPIs = false;
+    
+    //var memberData = [];
+    //var dataToAdd = [];    
+    var courseData=[];
+    var courseHistory=[];
+    var courseMember=[];    
+    var userPhoneNumber;
+    var allDataReady=0;
+    var reloadCourseNeeded = false;
+    var 要報名的課程;
+    var 要簽到的課程;
+    var 已經是會員=false;
+    var 所有課程展開 = true;
+    var 系列課程展開 = false;
+    var 日曆選擇的日期;
+    var 想報名的courseId;
+      
+    notInCourse=[];
+    inCourse=[];
+    myHistory=[];      
+    
+    loadCourses = false; //declared in data-process.js
+    $("#參加過課程Div").hide();
+    
+    // checkInputParam() 和 checkUserIdExist() 都是在 functions.js 定義
+    if (checkInputParam()) checkUserIdExist();
+        
   </script>
-  <script src="./js/app.js"></script>    
-  <script src="./js/db.js"></script>
-  <script src="./js/ui.js"></script>
 </body>
+
 </html>
