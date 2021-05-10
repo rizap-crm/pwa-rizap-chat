@@ -57,9 +57,9 @@ function readCourses(){
   //console.log("call API to Read Database");
   //userName = decodeURI(displayName[1]);
 
-  courseData = JSON.parse(courseDataStr);
-  courseHistory = JSON.parse(courseHistoryStr);
-  courseMember = JSON.parse(courseMemberStr);
+//  courseData = JSON.parse(courseDataStr);
+//  courseHistory = JSON.parse(courseHistoryStr);
+//  courseMember = JSON.parse(courseMemberStr);
   userId = "userId=U8570ed5006325d504933612308d0fddf".split("=");
   
   notInCourse=[];
@@ -430,6 +430,8 @@ async function 註冊會員() {
 
 function checkInputParam() {
   console.log(inputParam);
+  
+  //example
   try {
     displayName = inputParam[0].split("=");
     userId = inputParam[1].split("=");
@@ -438,18 +440,7 @@ function checkInputParam() {
     inputError = true;
   }
 
-  console.log(displayName[1]);
 
-  if (inputError) {
-    alert("輸入參數錯誤");
-    loadCourses = false;
-
-    // 等 #courseDiv 顯示後，再 hide()
-    setTimeout(function(){$("#courseDiv").hide();}, 500);
-
-    $("#errorMessage").css("display", "block"); 
-    return false;
-  }
     return true;
 }
 

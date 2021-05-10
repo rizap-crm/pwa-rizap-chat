@@ -57,7 +57,8 @@
     <script>
       var hrefString = window.location.href;
       var inputParamString = hrefString.split("?");
-      var inputParam = inputParamString[2].split("&")
+      console.log(inputParamString);
+      
       var courseId = inputParamString[inputParamString.length-1].split("=")[1];
 
       //var courseNum = parseInt(courseId.substring(1,5));
