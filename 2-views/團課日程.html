@@ -13,15 +13,7 @@
 </head>
 <body>
   <div data-role="view" data-init="initData"  data-title="團課日程" style="text-align: center;font-family: 'Noto Sans TC'" data-use-native-scrolling="true">
-<!--
-    <header data-role="header">
-      <div data-role="navbar" id="normal" class="km-accent">
-        <a data-align="left" data-role="button" onclick="app.navigate('#:back')" data-rel="" data-icon=""></a>           
-        <a data-align="right" data-role="button" href="#forms" data-rel="" data-icon="contacts"></a>       
-        <span data-role="view-title"></span>   
-      </div>
-    </header>   
--->
+
     <a id="查看課程表header" class="km-primary km-button-center" style="width:100%; font-size: 18px; color: white; margin-left: 0px; " data-role="button" onclick="查看及收起課程表()"
      >查看課程表 ▼</a>
      <div id="課表圖片Div" style="display:none">
@@ -119,7 +111,12 @@
       $("#courseTable").kendoMobileListView({
           dataSource: dataSource,
           pullToRefresh: false,            
-          template: $("#course-template").text()
+          template: $("#course-template").text(),
+          // 以下search 有問題
+          filterable: {
+            field: "課程編號",
+            operator: "contains"
+          },        
       });
 
       $("#calendar").kendoCalendar({

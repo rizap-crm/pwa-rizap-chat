@@ -64,6 +64,7 @@ navDataSource = new kendo.data.DataSource({
   //group: { field: "section" }
 })
 
+
 courseHistorySource = new kendo.data.DataSource({
   transport: {
     read: function (data) { getCourseHistory(courseHistorySource); }

@@ -138,6 +138,23 @@
       <div style="height: 15px"></div>
       <span id="報名課程title" class="報名課程title">已報名課程</span>
       <div style="height: 15px"></div>
+      
+      <div >
+        <a data-role="button"  data-icon="search" style="margin-left:15px; padding:5px;  border-width: 0px; background-color:transparent"></a>      
+        <input id="searchText" style="width:50%; margin-left:-35px; border-style:none; background-color: aqua; padding:5px;padding-left:30px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="search已報名課程(this.value)" />
+        <a id="serachClear" data-role="button"  data-icon="close" style="margin-left:-30px; padding: 5px; border-width: 0px; background-color:transparent" onclick="clearSearchText()"></a>
+        
+        <script>
+          var input = document.getElementById('searchText');
+          input.onkeydown = function() {
+              var key = event.keyCode || event.charCode;
+              if( key == 8 ){
+                console.log("backspace pressed", input.value);
+                if (input.value.length==1 /* length=1is tricky */) console.log("empty");
+              }
+          };          
+        </script>
+      </div>
 
       <ul data-role="listview" data-source="navDataSource" data-pull-to-refresh="true" data-template="nav-template" data-header-template="header-template" class="main-menu">
 
@@ -158,7 +175,7 @@
         </script>
 
       </ul>
-    </div>
+     </div>
 
      <div id="參加過課程Div">
       <div style="height: 15px"></div>
