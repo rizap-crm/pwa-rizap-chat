@@ -88,6 +88,14 @@
     }    
   </style>
 
+<!--  <a class="k-icon k-i-search" style="position:absolute; top:50%; right:10px; z-index:1000";font-size:30px></a>-->
+ 
+  <div id="toBottom" style="display:none; position:absolute; top:50%; right:0px;z-index:1000;background-color:#33333333; color:darkslategray; text-align:center;width:45px;" onclick="scrollToBottom()">
+    <a style=" font-size:10px; font-weight:900; color:darkslategray" >最底</a>   
+    <br>
+    <a class="k-icon k-i-arrow-s"></a>   
+  </div>
+ 
   <div id="errorMessage" style="display: none; margin-top: 2em; color: red; font-weight: bold" align="center">
     <h3 class="NotoSansFont" style="margin-top: 2em; color: red; font-weight: bold">輸入參數發生錯誤，請洽管理員</h3>
   </div>
@@ -140,11 +148,11 @@
       <div style="height: 15px"></div>
       
       <div id="searchBar">
-        <a data-role="button"  data-icon="search" style="margin-left:15px; margin-top:-5px; padding:5px;  border-width: 0px; background-color:transparent"></a>    
+        <a class="k-icon k-i-search" style="font-size:20px; color:gray; margin-left:20px" ></a>    
           
-        <input id="searchText" style="font-size:18px; width:50%; height:50px; margin-left:-35px; border-style:none; background-color:antiquewhite; padding:5px;padding-left:30px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="search已報名課程(this.value)" />
+        <input id="searchText" style="font-size:18px; width:95%; height:50px; margin-left:-32px; border-style:none; background-color:antiquewhite; padding:5px;padding-left:35px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="search已報名課程(this.value)" />
         
-        <a id="serachClear" data-role="button"  data-icon="close" style="margin-top:-5px; margin-left:-30px; padding: 5px; border-width: 0px; background-color:transparent" onclick="clearSearchText()"></a>
+        <a id="serachClear" class="k-icon k-i-close" style="font-size:20px; color:gray; margin-left:-30px; margin-top:-4px" onclick="clearSearchText()"></a>
         
         <script>
           var input = document.getElementById('searchText');
@@ -160,7 +168,7 @@
           };          
         </script>
       </div>
-
+      
       <ul data-role="listview" data-source="navDataSource" data-pull-to-refresh="true" data-template="nav-template" data-header-template="header-template" class="main-menu">
 
         <script type="text/x-kendo-template" id="header-template">
@@ -347,7 +355,8 @@
     
     // checkInputParam() 和 checkUserIdExist() 都是在 functions.js 定義
 //    if (checkInputParam()) checkUserIdExist();
-    checkUserIdExist();
+//    checkUserIdExist();
+    loadCourses = true;
         
   </script>
 

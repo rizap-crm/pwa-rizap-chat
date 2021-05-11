@@ -286,9 +286,9 @@ function callAPI(param, loadingMessage) {
 async function checkUserIdExist() {
   //Call API:00 檢查 userId 有沒有重複參加 */
 
-  loadCourses = true;
-  getCourseData(navDataSource);
-  getCourseHistory(courseHistorySource);
+//  loadCourses = true;
+//  getCourseData(navDataSource);
+//  getCourseHistory(courseHistorySource);
   
 //  $.loading.start('檢查是否已填寫必要資料');
 //  paramToSend = "?API=14" + "&UserId=" + userId[1];
@@ -522,4 +522,16 @@ function search已報名課程(searchFor){
       }
     });
   });
+}
+
+function scrollToBottom(){
+  const appScroller=app.view().scroller;
+  const scrollDistance= appScroller.height() - appScroller.scrollHeight(); 
+  if (scrollDistance < 0) appScroller.animatedScrollTo(0,scrollDistance);
+}
+
+function checkScroll(){
+  const appScroller= app.view().scroller;
+  const scrollDistance= appScroller.height() - appScroller.scrollHeight(); 
+  if (scrollDistance < 0) $("#toBottom").show();  
 }
