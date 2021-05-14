@@ -98,7 +98,7 @@
       <div id="searchBarChat" style="margin-top:10px">
         <a class="k-icon k-i-search" style="font-size:20px; color:gray; margin-left:20px" ></a>    
           
-        <input id="searchTextChat" style="font-size:18px; width:95%; height:50px; margin-left:-32px; border-style:none; background-color:antiquewhite; padding:5px;padding-left:35px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="search已預約課程(this.value)" />
+        <input id="searchTextChat" style="font-size:18px; width:95%; height:50px; margin-left:-32px; border-style:none; background-color:antiquewhite; padding:5px;padding-left:35px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="searchChat(this.value)" />
         
         <a id="serachClearChat" class="k-icon k-i-close" style="font-size:20px; color:gray; margin-left:-30px; margin-top:-4px" onclick="clearSearchTextChat()"></a>
         
@@ -110,7 +110,7 @@
                 //console.log("backspace pressed", input.value);
                 if (inputChat.value.length==1 /* length=1is tricky */) {
                   //console.log("empty");
-                  search已預約課程("");
+                  searchChat("");
                 }
               }
           };          
@@ -195,10 +195,18 @@
         pageSize: 40,
         //group: { field: "section" }
       });
-        
+    
+    var messages=[];
+    var matchMsgs=[];
     function getChatData(data){
+      
+      if ($("#searchBar").css("display")=="block") {
+        chatDataSource.success(matchMsgs); 
+        return;
+      }
+      
       console.log("getChatData");
-      const messages = [
+      messages = [
         { "message編號": '0001',
           "messageType": 'text',
           "message內容": 'Hello',
@@ -222,7 +230,7 @@
         },
         { "message編號": '0004',
           "messageType": 'img',         
-          "message內容": 'What type of car do you wnat?',
+          "message內容": 'What type of car do you want?',
           "發送者":  'Me',   
           "message時間": '2021/05/13 11:31',
           "message圖片":  '../dog.png',
@@ -250,7 +258,7 @@
         },
         { "message編號": '0008',
           "messageType": 'img',         
-          "message內容": 'What type of car do you wnat?',
+          "message內容": 'What type of car do you want?',
           "發送者":  'Me',   
           "message時間": '2021/05/13 11:31',
           "message圖片":  '../dog.png',
@@ -278,7 +286,7 @@
         },
         { "message編號": '0012',
           "messageType": 'img',         
-          "message內容": 'What type of car do you wnat?',
+          "message內容": 'What type of car do you want?',
           "發送者":  'Me',   
           "message時間": '2021/05/13 11:31',
           "message圖片":  '../dog.png',
@@ -306,19 +314,20 @@
           $(msgTimeId).css("float","right");
 
         }
-      }      
+      }  
+      setTimeout( function() {scrollToBottom("chatListView");}, 1);
     }
     
     function chatShow(){
       $("#chatTypeInput").show();
-      //console.log(chatDataSource.data());
-      //getChatData(chatDataSource);
       $(".km-on-ios .km-list > li").css("border-width", "0px");
       
     }
     
     function showSearchBar(){
       $("#searchBar").show();
+      $("#searchText").val("");
+      $("#searchText").focus();
     }
   </script>
 

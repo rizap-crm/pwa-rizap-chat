@@ -109,7 +109,7 @@
   <div id="searchBar" style="display:none; position:absolute; top: 70px; width:100%;z-index:1000">
     <a class="k-icon k-i-search" style="font-size:20px; color:gray; margin-left:20px" ></a>      
 
-    <input id="searchText" style="font-size:18px; width:95%; height:50px; margin-left:-32px; border-style:none; background-color:rgba(250,235,215,0.92); padding:5px;padding-left:35px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="search已預約課程(this.value)" />
+    <input id="searchText" style="font-size:18px; width:95%; height:50px; margin-left:-32px; border-style:none; background-color:rgba(250,235,215,0.92); padding:5px;padding-left:35px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="searchChat(this.value)" />
 
     <a id="serachClear" class="k-icon k-i-close" style="font-size:20px; color:gray; margin-left:-60px; margin-top:-4px" onclick="clearSearchText()"></a>
 
@@ -123,12 +123,13 @@
             //console.log("backspace pressed", input.value);
             if (input.value.length==1 /* length=1is tricky */) {
               //console.log("empty");
-              search已預約課程("");
+              searchChat("");
             }
           }
       };    
       function hideSearchBar(){
         $("#searchBar").hide();
+        getChatData(chatDataSource);        
       }
     </script>
   </div>
@@ -153,7 +154,7 @@
 
         <a data-align="right" data-role="button" href="index2.html" data-rel="" data-icon="chat" style="font-size:30px;padding: 10px;margin-top:-55px"></a>
         
-        <span data-role="view-title"></span>
+        <span data-role="view-title" id="mainTitle"></span>
              
       </div>
     </header>
@@ -181,27 +182,13 @@
   
   <script>
         
-    var paramToSend = "";
-    var inputParamString = location.search;
-    var inputParam = inputParamString.split("&");
-    var displayName, userId, pictureUrl;
-    var inputError = false;
-    var useLocalAPIs = false;
-    
 
-    var allDataReady=0;
-    var reloadCourseNeeded = false;
 
     var show到底 = false;
     var showInput = false;
       
-    notInCourse=[];
-    inCourse=[];
-    myHistory=[];     
+
     
-    loadCourses = true;
-
-
   </script>
 
 </body>

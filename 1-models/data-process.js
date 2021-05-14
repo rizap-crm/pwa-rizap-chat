@@ -1,10 +1,5 @@
 var isAndroid = kendo.support.mobileOS.android;
 
-//var apiSite = 'https://api-linko-sports-center.herokuapp.com/';
-var apiSite = 'https://beida-api-for-firebase.herokuapp.com/';
-
-var loadCourses = false;
-
 // override datasources
 預約課程DataSource = new kendo.data.DataSource({
   // 使用 data 的方法一
@@ -39,7 +34,9 @@ var loadCourses = false;
   
   // 使用 data 的方法二, transport
   transport: {
-    read: function (data) { getCourseData(預約課程DataSource); 
+    read: function (data) { 
+      //getCourseData(預約課程DataSource); 
+      get預約課程(預約課程DataSource); 
                           }
   },
 //  sort: {
@@ -55,9 +52,9 @@ var loadCourses = false;
 
   schema: {
     total: function () {
-      console.log("scheme total");
-      取得經緯度();    
-      return 77;
+//      console.log("scheme total");
+//      取得經緯度();    
+//      return 77;
     }
   },
   serverPaging: true,
@@ -66,77 +63,39 @@ var loadCourses = false;
 })
 
 searchDataSource = 預約課程DataSource;
-
 var indexForTest=0;
 var dataTemp=[];
-function getCourseData(data) {
-  console.log("prepare data for CourseListView");
-  
-  if (loadCourses == false) return 1;
-  
-//  allDataReady = 0;
-  readCourses();
 
-//  var checkDataReady = setInterval(function(){
-//    if (allDataReady==4) {
-//      //console.log(inCourse, courseData);
-//      clearInterval(checkDataReady);
-      console.log("Set up data for listview")
-      //var dataTemp =[];
-//      inCourse.forEach(function(course, index, array){
-      for (var i=0; i < inCourse.length; i++){
-        courseData.forEach(function(item, ind, arr){
-//          if (course==item[0]) {
-          if (inCourse[i]==item[0]) {
-            //console.log(course, ind);
-            var 課程圖片Url = ( courseData[ind][11] !="")?courseData[ind][11]:"picPlaceholder.png";
-            var courseTitle = {
-              "課程編號": courseData[ind][0]+"-"+indexForTest++,              
-              "課程名稱": courseData[ind][1],
-              "老師時間": courseData[ind][2] + " | " + courseData[ind][3], 
-              "課程費用": courseData[ind][5],  
-              "課程圖片": 課程圖片Url,
-              "繳費狀況": "未繳費",
-              "繳費狀況顏色": "coral",              
-              "url": "2-views/courseDetail.html?courseId=" + courseData[ind][0],
-              "section": "A"             
-            };   
-            
-            courseMember.forEach(function(course1, index1, array1){
-              //console.log(index1, courseData[ind][0]);
-              if (course1[0]==courseData[ind][0]) {
-                for (var i=1; i< course1.length;i++){
-                  //console.log(course1[i][3]);
-                  if (course1[i][3]== userId[1] && course1[i][1]=="已繳費") {
-                    courseTitle.繳費狀況 = "已繳費";
-                    courseTitle.繳費狀況顏色 = "darkslategray";
-                  } else if (course1[i][3]== userId[1] && course1[i][1]=="免費") {
-                    courseTitle.繳費狀況 = "免費";
-                    courseTitle.繳費狀況顏色 = "darkslategray";                    
-                  }
-                }
-              }
-            });           
-            
-            
-            dataTemp.push(courseTitle);
+function get預約課程(data) {
+  console.log("prepare data for 預約課程ListView");
+  
+  for (var i=0; i < inCourse.length; i++){
 
-          }
-        });
-      };
-   
-      console.log(dataTemp, length);
-      data.success(dataTemp.slice().reverse()); //加上 slice() 才不會改變 dataTemp
-      
-      if (dataTemp.length==0) {
-        $("#預約課程title").text("尚無報名課程");
-      }else {
-        $("#預約課程title").text("已預約課程");
-      }    
-//    }
-//    
-//  }, 100);
-  //checkScroll();
+        var 課程圖片Url = ( inCourse[i][11] !="")?inCourse[i][11]:"picPlaceholder.png";
+        var courseTitle = {
+          "課程編號": inCourse[i][0]+"-"+indexForTest++,              
+          "課程名稱": inCourse[i][1],
+          "老師時間": inCourse[i][2] + " | " + inCourse[i][3], 
+          "課程費用": inCourse[i][5],  
+          "課程圖片": 課程圖片Url,
+          "繳費狀況": "未繳費",
+          "繳費狀況顏色": "coral",              
+          "url": "2-views/courseDetail.html?courseId=" + courseData[i][0],
+          "section": "A"             
+        };   
+
+        dataTemp.push(courseTitle);
+
+  };
+
+  console.log(dataTemp, length);
+  data.success(dataTemp.slice().reverse()); //加上 slice() 才不會改變 dataTemp
+
+  if (dataTemp.length==0) {
+    $("#mainTitle").text("無預約課程");
+  }else {
+    $("#mainTitle").text("已預約課程");
+  }    
 }
 
 function mainShow(e) {
@@ -150,6 +109,8 @@ function mainShow(e) {
   $("#chatTypeInput").hide();
   $("#searchBar").hide();
   $(".km-on-ios .km-list > li").css("border-width", "1px");
+  
+  if (inCourse.length == 0) setTimeout(function() {$("#mainTitle").text("無預約課程");}, 10);
 }
 
 function chatShow(e) {
@@ -190,63 +151,131 @@ function initMainListView(e){
 //  });  
 }
 
+var chatListViewScrollTop;
 function initChatListView(e) {
   console.log("initChatListView");
-
+  var scroller = e.view.scroller;
+  scroller.bind("scroll", function(e) {
+//    console.log("top***:",e.scrollTop, scroller.scrollHeight() - scroller.height());
+    chatListViewScrollDiffer = e.scrollTop - (scroller.scrollHeight() - scroller.height());
+    if (chatListViewScrollDiffer==0) {
+      console.log("at bottom");
+      $("#toBottom").hide();
+    } else {
+      $("#toBottom").show();
+    }
+  });
 }
 
 var desktop = !kendo.support.mobileOS;
 
-function showSearch() {
-//  $("#normal").addClass("navbar-hidden");
-//  $("#search").removeClass("navbar-hidden");
-//  if (desktop) {
-//    setTimeout(function () {
-//      $("#demos-search").focus();
-//    });
-//  } else {
-//    $("#demos-search").focus();
-//  }
-  console.log("search");
-}
-
-function hideSearch() {
-  $("#normal").removeClass("navbar-hidden");
-  $("#search").addClass("navbar-hidden");
-}
-
-function checkSearch(e) {
-  if (!searchDataSource.filter()) {
-    e.preventDefault();
-    this.replace([]);
-    $("#search-tooltip").show();
-  } else {
-    $("#search-tooltip").hide();
-  }
-}
-
-function searchForCourse(value){ 
-  if (value.length < 2) {
-        searchDataSource.filter(null);
-    } else {
-        var filter = { logic: "and", filters: []};
-        var words = value.split(" ");
-
-        for (var i = 0; i < words.length; i ++) {
-            var word = words[i];
-            filter.filters.push({
-                logic: "or",
-                filters: [
-                    //{ field: "section", operator: "contains", value: word },
-                    { field: "課程名稱", operator: "contains", value: word },
-                    //{ field: "title", operator: titleContains(word) }
-                ]
-            });
-        }
-
-        searchDataSource.filter(filter);
+function searchChat(searchFor){ 
+  console.log("serch for chat:", searchFor);
+  try {
+    var numOfItems = chatDataSource.lastRange().end;
+    for (var i=0; i< numOfItems; i++){
+      var item = chatDataSource.at(0);
+      chatDataSource.remove(item);
     }
+  }catch(e){
+    console.log(e);
+  } 
+  
+  matchMsgs =[];
+  for (var i=0; i< messages.length; i++){
+    if (messages[i].message內容.includes(searchFor)) {
+      matchMsgs.push(messages[i]);
+    }
+  }
+  
+  chatDataSource.success(matchMsgs);
+
+  for (var i=0; i< messages.length; i++){
+    const msgLength = messages[i].message內容.length;
+    //console.log(msgLength);
+
+    //data.add(messages[i]);
+
+    if (messages[i].發送者 == 'Me') {
+      const msgId = "#msgContent"+messages[i].message編號;
+      const msgTimeId = "#msgTime"+messages[i].message編號;
+
+
+      $(msgId).css("text-align", "right");
+      $(msgId).css("margin-left","20%");
+      $(msgId).css("background", "aqua");
+      $(msgTimeId).css("float","right");
+
+    }
+  }
+  $(".km-on-ios .km-list > li").css("border-width", "0px");
 }
+
+
+function search已報名課程(searchFor){
+  
+  try {
+    var numOfItems = navDataSource.lastRange().end;
+    for (var i=0; i< numOfItems; i++){
+      var item = navDataSource.at(0);
+      navDataSource.remove(item);
+    }
+  }catch(e){
+    console.log(e);
+  }  
+  
+  var dataTemp =[];
+  inCourse.forEach(function(course, index, array){
+    courseData.forEach(function(item, ind, arr){
+      if (course==item[0]) {
+        
+        if (courseData[ind][0].includes(searchFor)
+         || courseData[ind][1].includes(searchFor)
+         || courseData[ind][2].includes(searchFor)
+         || courseData[ind][3].includes(searchFor)
+         || courseData[ind][5].includes(searchFor) || (searchFor=="免費" && courseData[ind][5]=='0')
+        ){
+          console.log("match" );
+        
+          //console.log(course, ind);
+          var 課程圖片Url = ( courseData[ind][11] !="")?courseData[ind][11]:"picPlaceholder.png";
+          var courseTitle = {
+            "課程編號": courseData[ind][0],              
+            "課程名稱": courseData[ind][1],
+            "老師時間": courseData[ind][2] + " | " + courseData[ind][3], 
+            "課程費用": courseData[ind][5],  
+            "課程圖片": 課程圖片Url,
+            "繳費狀況": "未繳費",
+            "繳費狀況顏色": "coral",              
+            "url": "2-views/courseDetail.html?courseId=" + courseData[ind][0],
+            "section": "A"             
+          };   
+
+          courseMember.forEach(function(course1, index1, array1){
+            //console.log(index1, courseData[ind][0]);
+            if (course1[0]==courseData[ind][0]) {
+              for (var i=1; i< course1.length;i++){
+                //console.log(course1[i][3]);
+                if (course1[i][3]== userId[1] && course1[i][1]=="已繳費") {
+                  courseTitle.繳費狀況 = "已繳費";
+                  courseTitle.繳費狀況顏色 = "darkslategray";
+                } else if (course1[i][3]== userId[1] && course1[i][1]=="免費") {
+                  courseTitle.繳費狀況 = "免費";
+                  courseTitle.繳費狀況顏色 = "darkslategray";                    
+                }
+              }
+            }
+          });           
+
+          navDataSource.add(courseTitle);
+          //dataTemp.push(courseTitle);
+        }
+      }
+    });
+  });
+}
+
+
 
 window.app = new kendo.mobile.Application($(document.body), {
   layout: "courseDiv",

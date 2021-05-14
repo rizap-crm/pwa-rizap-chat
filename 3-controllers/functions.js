@@ -125,7 +125,7 @@ function callAPI(param, loadingMessage) {
 
 function clearSearchText(){
   $("#searchText").val("");
-  search已預約課程("");
+  searchChat("");
 }
 
 function scrollToBottom(toBottomId){
@@ -134,7 +134,7 @@ function scrollToBottom(toBottomId){
   const scrollDistance= appScroller.height() - appScroller.scrollHeight(); 
   if (scrollDistance < 0) {
     appScroller.animatedScrollTo(0,scrollDistance);
-    setTimeout(function(){$(toBottomId).hide()}, 500);
+    setTimeout(function(){$("#toBottom").hide()}, 500);
     show到底 = false;
   }
 }
