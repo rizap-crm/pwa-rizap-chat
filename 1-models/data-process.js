@@ -154,17 +154,17 @@ function initMainListView(e){
 var chatListViewScrollTop;
 function initChatListView(e) {
   console.log("initChatListView");
-  var scroller = e.view.scroller;
-  scroller.bind("scroll", function(e) {
-//    console.log("top***:",e.scrollTop, scroller.scrollHeight() - scroller.height());
-    chatListViewScrollDiffer = e.scrollTop - (scroller.scrollHeight() - scroller.height());
-    if (chatListViewScrollDiffer==0) {
-      console.log("at bottom");
-      $("#toBottom").hide();
-    } else {
-      $("#toBottom").show();
-    }
-  });
+//  var scroller = e.view.scroller;
+//  scroller.bind("scroll", function(e) {
+////    console.log("top***:",e.scrollTop, scroller.scrollHeight() - scroller.height());
+//    chatListViewScrollDiffer = e.scrollTop - (scroller.scrollHeight() - scroller.height());
+//    if (chatListViewScrollDiffer==0) {
+//      console.log("at bottom");
+//      $("#toBottom").hide();
+//    } else {
+//      $("#toBottom").show();
+//    }
+//  });
 }
 
 var desktop = !kendo.support.mobileOS;
@@ -209,6 +209,7 @@ function searchChat(searchFor){
     }
   }
   $(".km-on-ios .km-list > li").css("border-width", "0px");
+  scrollToTop("");
 }
 
 

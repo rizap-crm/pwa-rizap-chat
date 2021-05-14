@@ -139,6 +139,12 @@ function scrollToBottom(toBottomId){
   }
 }
 
+function scrollToTop(toBottomId){
+  console.log(toBottomId)
+  const appScroller=app.view().scroller;
+  appScroller.animatedScrollTo(0,0);
+}
+  
 function checkScroll(){
   const appScroller= app.view().scroller;
   const scrollDistance= appScroller.height() - appScroller.scrollHeight(); 

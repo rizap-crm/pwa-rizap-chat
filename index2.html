@@ -202,8 +202,28 @@
       
       if ($("#searchBar").css("display")=="block") {
         chatDataSource.success(matchMsgs); 
+        for (var i=0; i< matchMsgs.length; i++){
+          const msgLength = matchMsgs[i].message內容.length;
+          //console.log(msgLength);
+
+          //data.add(messages[i]);
+
+          if (matchMsgs[i].發送者 == 'Me') {
+            const msgId = "#msgContent"+matchMsgs[i].message編號;
+            const msgTimeId = "#msgTime"+matchMsgs[i].message編號;
+
+
+            $(msgId).css("text-align", "right");
+            $(msgId).css("margin-left","20%");
+            $(msgId).css("background", "aqua");
+            $(msgTimeId).css("float","right");
+
+          }
+        }  
+        setTimeout( function() {scrollToBottom("chatListView");}, 1);
         return;
       }
+        
       
       console.log("getChatData");
       messages = [
