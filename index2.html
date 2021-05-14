@@ -76,12 +76,7 @@
       margin-left: 15px;
 
     }
-    
-    #calendar,
-    #calendar .k-calendar-view,
-    #calendar .k-content {
-        width: 100%;
-    }    
+      
   </style>
 
 <!--  <a class="k-icon k-i-search" style="position:absolute; top:50%; right:10px; z-index:1000";font-size:30px></a>-->
@@ -91,13 +86,14 @@
       <div data-role="navbar" id="normalChat" class="km-accent">
 
         <a data-align="left" data-role="button" href="" data-rel="" data-icon="back"></a>
+        <a data-align="right" data-role="button" data-rel="" data-icon="search" onclick="showSearchBar()" ></a>
         
         <span data-role="view-title"></span>
-             
       </div>
     </header>
 
-    <div id="已預約課程DivChat">       
+    <div id="已預約課程DivChat" style="margin-top: 0%;">       
+<!--
     
       <div id="searchBarChat" style="margin-top:10px">
         <a class="k-icon k-i-search" style="font-size:20px; color:gray; margin-left:20px" ></a>    
@@ -121,6 +117,7 @@
         </script>
       </div>
       
+-->
     
       <ul data-role="listview" data-source="chatDataSource" data-pull-to-refresh="true" data-template="chattemplate"  class="main-menu">
 
@@ -151,9 +148,7 @@
   
 <!--  <h2 style="position: absolute; bottom: 50; left: 0" id="deleteMeChat">aaa</h2>-->
 
-  <script>
-      console.log("aaa");
-    
+  <script>  
       chatDataSource = new kendo.data.DataSource({
         // 使用 data 的方法一
 //          data: [
@@ -315,11 +310,15 @@
     }
     
     function chatShow(){
-      $("#ChatEnter").show();
+      $("#chatTypeInput").show();
       //console.log(chatDataSource.data());
       //getChatData(chatDataSource);
       $(".km-on-ios .km-list > li").css("border-width", "0px");
       
+    }
+    
+    function showSearchBar(){
+      $("#searchBar").show();
     }
   </script>
 

@@ -89,15 +89,65 @@
     {
       content: "\e092";
     }
+    
+    .km-no-search:after,
+    .km-bo-search:before
+    {
+      content: "\e011";
+    }     
   </style>
  
-  <div id="toBottom" style="display:none; position:absolute; top:50%; right:10px;z-index:1000;background-color:#33333333; color:darkslategray; text-align:center;width:45px;" onclick="scrollToBottom('#toBottom')">
+  <!-- toBottom is displayed and used in index2.html -->
+  <div id="toBottom" style="display:none; position:absolute; top:50%; right:10px;z-index:1000;background-color:#33333333; color:darkslategray; text-align:center;width:45px;" onclick="scrollToBottom()">
+
     <a style=" font-size:18px; font-weight:900; color:darkslategray" >最底</a>   
     <br>
     <a class="k-icon k-i-arrow-s"></a>   
   </div>
     
-  <div data-role="view" data-title="Chatty" style="font-family: 'Noto Sans TC'; height:100%" id="courseDiv" data-layout="" data-show="mainShow" data-init="initMainListView">
+  <!-- searchBar is displayed and used in index2.html -->
+  <div id="searchBar" style="display:none; position:absolute; top: 70px; width:100%;z-index:1000">
+    <a class="k-icon k-i-search" style="font-size:20px; color:gray; margin-left:20px" ></a>      
+
+    <input id="searchText" style="font-size:18px; width:95%; height:50px; margin-left:-32px; border-style:none; background-color:rgba(250,235,215,0.92); padding:5px;padding-left:35px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="search已預約課程(this.value)" />
+
+    <a id="serachClear" class="k-icon k-i-close" style="font-size:20px; color:gray; margin-left:-60px; margin-top:-4px" onclick="clearSearchText()"></a>
+
+    <a class="k-icon k-i-arrow-chevron-up" style="font-size:20px; color:gray; margin-left:5px" onclick="hideSearchBar()" ></a>  
+       
+    <script>
+      var input = document.getElementById('searchText');
+      input.onkeydown = function() {
+          var key = event.keyCode || event.charCode;
+          if( key == 8 ){
+            //console.log("backspace pressed", input.value);
+            if (input.value.length==1 /* length=1is tricky */) {
+              //console.log("empty");
+              search已預約課程("");
+            }
+          }
+      };    
+      function hideSearchBar(){
+        $("#searchBar").hide();
+      }
+    </script>
+  </div>
+
+  <!-- chatTypeInput is displayed and used in index2.html -->
+  <div id="chatTypeInput" style="position:absolute; bottom: 10px; width:100%;">
+   <hr>
+
+    <a class="k-icon k-i-image" style="font-size:30px; float:left; margin:0 10px 10px 10px" onclick="console.log('select photo')" ></a>
+
+    <img src="./emoji.png" style="float:left; width:26px; margin:40px 10px 0px -38px" onclick="console.log('select emoji')" />  
+   
+    <textarea rows="3" placeholder="Type here ..." style="font-size:15px; padding:10px;border-width:0px;margin-left:0px; width:73%;background:aqua;border-radius:10px; resize:none"></textarea>
+    <span style="float:right;margin:0 5px; background-color: darkorchid; color: aliceblue; padding:8px;border-radius:25px" onclick="console.log('send message')">Send</span>
+  </div>
+  
+  
+  <div data-role="view" data-title="已預約課程" style="font-family: 'Noto Sans TC'; height:100%;" id="courseDiv" data-layout="" data-show="mainShow" data-init="initMainListView">
+
     <header data-role="header">
       <div data-role="navbar" id="normal" class="km-accent">
 
@@ -108,35 +158,8 @@
       </div>
     </header>
 
-       
-    <div id="已預約課程Div">       
-
-      <div style="height: 15px"></div>
-      <span id="預約課程title" class="預約課程title">已預約課程</span>
-      <div style="height: 15px"></div>
-      
-      <div id="searchBarMain">
-        <a class="k-icon k-i-search" style="font-size:20px; color:gray; margin-left:20px" ></a>    
-          
-        <input id="searchText" style="font-size:18px; width:95%; height:50px; margin-left:-32px; border-style:none; background-color:antiquewhite; padding:5px;padding-left:35px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="search已預約課程(this.value)" />
-        
-        <a id="serachClear" class="k-icon k-i-close" style="font-size:20px; color:gray; margin-left:-30px; margin-top:-4px" onclick="clearSearchText()"></a>
-        
-        <script>
-          var input = document.getElementById('searchText');
-          input.onkeydown = function() {
-              var key = event.keyCode || event.charCode;
-              if( key == 8 ){
-                //console.log("backspace pressed", input.value);
-                if (input.value.length==1 /* length=1is tricky */) {
-                  //console.log("empty");
-                  search已預約課程("");
-                }
-              }
-          };          
-        </script>
-      </div>
-      
+    <div id="已預約課程Div" style="margin-top: 0%">       
+     
       <ul data-role="listview" data-source="預約課程DataSource" data-pull-to-refresh="true" data-template="nav-template" data-header-template="" class="main-menu" style="margin-top:10px">
 
         <script type="text/x-kendo-template" id="nav-template">          
@@ -149,21 +172,7 @@
 
       </ul>
      </div>
-
   </div>  
-  
-  <div id="ChatEnter" style="position:absolute; bottom: 10px; width:100%;">
-   <hr>
-
-    <a class="k-icon k-i-image" style="font-size:30px; float:left; margin:0 10px 10px 10px" onclick="console.log('select photo')" ></a>
-
-    <img src="./emoji.png" style="float:left; width:26px; margin:40px 10px 0px -38px" onclick="console.log('select emoji')" />  
-   
-    <textarea rows="3" placeholder="Type here ..." style="font-size:15px; padding:10px;border-width:0px;margin-left:0px; width:73%;background:aqua;border-radius:10px; resize:none"></textarea>
-    <span style="float:right;margin:0 5px; background-color: darkorchid; color: aliceblue; padding:8px;border-radius:25px" onclick="console.log('send message')">Send</span>
-  </div>
-  
-
 
   <script src="dummyData.js"></script>
   <script src="3-controllers/functions.js"></script>

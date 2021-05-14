@@ -39,7 +39,8 @@ var loadCourses = false;
   
   // 使用 data 的方法二, transport
   transport: {
-    read: function (data) { getCourseData(預約課程DataSource); getCourseHistory(courseHistorySource);  }
+    read: function (data) { getCourseData(預約課程DataSource); 
+                          }
   },
 //  sort: {
 //    field: "課程名稱",
@@ -56,34 +57,6 @@ var loadCourses = false;
     total: function () {
       console.log("scheme total");
       取得經緯度();    
-      return 77;
-    }
-  },
-  serverPaging: true,
-  pageSize: 40,
-  //group: { field: "section" }
-})
-
-
-courseHistorySource = new kendo.data.DataSource({
-  transport: {
-    read: function (data) { getCourseHistory(courseHistorySource); }
-  },
-//  sort: {
-//    field: "課程名稱",
-//    dir: "asc"
-//  },
-  requestStart: function () {
-    kendo.ui.progress($("#loading"), true);
-  },
-  requestEnd: function () {
-    kendo.ui.progress($("#loading"), false);
-  },
-
-  schema: {
-    total: function () {
-      console.log("courseHistorySource scheme total");
-      //取得經緯度();    
       return 77;
     }
   },
@@ -166,51 +139,6 @@ function getCourseData(data) {
   //checkScroll();
 }
 
-function getCourseHistory(data) {
-  console.log("getting CourseHistory", loadCourses);
-  
-  if (loadCourses == false) return 1;
-
-//  var checkDataReady = setInterval(function(){
-//    //console.log("in history", allDataReady);
-//    if (allDataReady==4) {
-//      clearInterval(checkDataReady);
-//      //console.log("in xxx", myHistory)
-      var dataTemp =[];
-      myHistory.forEach(function(course, index, array){
-        console.log(course);
-        courseHistory.forEach(function(item, ind, arr){
-          if (course==item[0]) {
-            //console.log(course, ind);
-            var 課程圖片Url = ( item[11] !="" )?item[11]:"picPlaceholder.png";            
-            var courseTitle = {
-              "課程編號": item[0],              
-              "課程名稱": item[1],
-              "老師時間": item[2] + " | " + item[3], 
-              "課程費用": item[5], 
-              "課程圖片": 課程圖片Url,              
-              "url": "2-views/courseDetail.html?courseId=" + courseHistory[ind][0],
-              "section": "A"             
-            };
-            dataTemp.push(courseTitle);
-          }
-        });
-      });
-   
-      data.success(dataTemp);  
-      
-      if (dataTemp.length==0) {
-        $("#參加過課程title").text("尚無參加過課程");
-      }else {
-        $("#參加過課程title").text("參加過課程");
-      }      
-//      
-//    }
-//    
-//  }, 100);
-  setTimeout(checkScroll, 500);
-}
-
 function mainShow(e) {
   console.log("main page showed");
   if (show到底) {
@@ -219,16 +147,18 @@ function mainShow(e) {
     $("#toBottom").hide();
   }
 
-  $("#ChatEnter").hide();
+  $("#chatTypeInput").hide();
+  $("#searchBar").hide();
+  $(".km-on-ios .km-list > li").css("border-width", "1px");
 }
 
 function chatShow(e) {
   console.log("chat page showed");
 
-  const enterInputHTML = "<hr><input id=\"ChatEnterText\" type=\"text\" class=\"NotoSansFont\" placeholder=\"Type here ...\" style=\"border-width:0px;margin-left:20px; background:aqua;padding:10px; border-radius:10px; width:80%\"><span style=\"margin-left: 10px\" onclick=\"console.log('send a message')\">Send</span>";
+  const enterInputHTML = "<hr><input id=\"chatTypeInputText\" type=\"text\" class=\"NotoSansFont\" placeholder=\"Type here ...\" style=\"border-width:0px;margin-left:20px; background:aqua;padding:10px; border-radius:10px; width:80%\"><span style=\"margin-left: 10px\" onclick=\"console.log('send a message')\">Send</span>";
   
-  $("#ChatEnter").html(enterInputHTML);
-  $("#ChatEnter").show();
+  $("#chatTypeInput").html(enterInputHTML);
+  $("#chatTypeInput").show();
 
 }
 
