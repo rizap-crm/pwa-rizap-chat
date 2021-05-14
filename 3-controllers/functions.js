@@ -257,7 +257,7 @@ function 更新資料() {
 
   if (!已經是會員) {
     loadCourses = true;
-    getCourseData(navDataSource);
+    getCourseData(預約課程DataSource);
     getCourseHistory(courseHistorySource);      
   }
   
@@ -287,7 +287,7 @@ async function checkUserIdExist() {
   //Call API:00 檢查 userId 有沒有重複參加 */
 
 //  loadCourses = true;
-//  getCourseData(navDataSource);
+//  getCourseData(預約課程DataSource);
 //  getCourseHistory(courseHistorySource);
   
 //  $.loading.start('檢查是否已填寫必要資料');
@@ -324,7 +324,7 @@ async function checkUserIdExist() {
 //    $("#LINE頭像").attr("src", userProfile[7]);
     
 //    loadCourses = true;
-//    getCourseData(navDataSource);
+//    getCourseData(預約課程DataSource);
 //    getCourseHistory(courseHistorySource);    
 //  }
 }
@@ -414,7 +414,7 @@ async function 註冊會員() {
 //      console.log("回到團課");
 //      location.reload();
 //      loadCourses = true;
-//      getCourseData(navDataSource);
+//      getCourseData(預約課程DataSource);
 
     } else {
       alert("資料新增失敗，請洽管理員")
@@ -448,26 +448,26 @@ function 切換課程()
 {
   console.log("切換課程", this.selectedIndex);
   if(this.selectedIndex==0){
-    $("#已報名課程Div").show();
+    $("#已預約課程Div").show();
     $("#參加過課程Div").hide();
   } else {
-    $("#已報名課程Div").hide();
+    $("#已預約課程Div").hide();
     $("#參加過課程Div").show();    
   }
 }
 
 function clearSearchText(){
   $("#searchText").val("");
-  search已報名課程("");
+  search已預約課程("");
 }
 
-function search已報名課程(searchFor){
+function search已預約課程(searchFor){
   
   try {
-    var numOfItems = navDataSource.lastRange().end;
+    var numOfItems = 預約課程DataSource.lastRange().end;
     for (var i=0; i< numOfItems; i++){
-      var item = navDataSource.at(0);
-      navDataSource.remove(item);
+      var item = 預約課程DataSource.at(0);
+      預約課程DataSource.remove(item);
     }
   }catch(e){
     console.log(e);
@@ -516,7 +516,7 @@ function search已報名課程(searchFor){
             }
           });           
 
-          navDataSource.add(courseTitle);
+          預約課程DataSource.add(courseTitle);
           //dataTemp.push(courseTitle);
         }
       }
@@ -524,14 +524,22 @@ function search已報名課程(searchFor){
   });
 }
 
-function scrollToBottom(){
+function scrollToBottom(toBottomId){
+  console.log(toBottomId)
   const appScroller=app.view().scroller;
   const scrollDistance= appScroller.height() - appScroller.scrollHeight(); 
-  if (scrollDistance < 0) appScroller.animatedScrollTo(0,scrollDistance);
+  if (scrollDistance < 0) {
+    appScroller.animatedScrollTo(0,scrollDistance);
+    setTimeout(function(){$(toBottomId).hide()}, 500);
+    show到底 = false;
+  }
 }
 
 function checkScroll(){
   const appScroller= app.view().scroller;
   const scrollDistance= appScroller.height() - appScroller.scrollHeight(); 
-  if (scrollDistance < 0) $("#toBottom").show();  
+  if (scrollDistance < 0) {
+    $("#toBottom").show();  
+    show到底 = true;
+  }
 }

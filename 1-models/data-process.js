@@ -6,7 +6,7 @@ var apiSite = 'https://beida-api-for-firebase.herokuapp.com/';
 var loadCourses = false;
 
 // override datasources
-navDataSource = new kendo.data.DataSource({
+預約課程DataSource = new kendo.data.DataSource({
   // 使用 data 的方法一
   //  data: [
   //      {
@@ -39,7 +39,7 @@ navDataSource = new kendo.data.DataSource({
   
   // 使用 data 的方法二, transport
   transport: {
-    read: function (data) { getCourseData(navDataSource); getCourseHistory(courseHistorySource);  }
+    read: function (data) { getCourseData(預約課程DataSource); getCourseHistory(courseHistorySource);  }
   },
 //  sort: {
 //    field: "課程名稱",
@@ -92,7 +92,7 @@ courseHistorySource = new kendo.data.DataSource({
   //group: { field: "section" }
 })
 
-searchDataSource = navDataSource;
+searchDataSource = 預約課程DataSource;
 
 var indexForTest=0;
 var dataTemp=[];
@@ -156,9 +156,9 @@ function getCourseData(data) {
       data.success(dataTemp.slice().reverse()); //加上 slice() 才不會改變 dataTemp
       
       if (dataTemp.length==0) {
-        $("#報名課程title").text("尚無報名課程");
+        $("#預約課程title").text("尚無報名課程");
       }else {
-        $("#報名課程title").text("已報名課程");
+        $("#預約課程title").text("已預約課程");
       }    
 //    }
 //    
@@ -211,10 +211,25 @@ function getCourseHistory(data) {
   setTimeout(checkScroll, 500);
 }
 
+function mainShow(e) {
+  console.log("main page showed");
+  if (show到底) {
+    $("#toBottom").show();
+  } else {
+    $("#toBottom").hide();
+  }
 
-function nullForNow(e) {
-  console.log("nullForNow");
-  //currentExample = nullForNow;
+  $("#ChatEnter").hide();
+}
+
+function chatShow(e) {
+  console.log("chat page showed");
+
+  const enterInputHTML = "<hr><input id=\"ChatEnterText\" type=\"text\" class=\"NotoSansFont\" placeholder=\"Type here ...\" style=\"border-width:0px;margin-left:20px; background:aqua;padding:10px; border-radius:10px; width:80%\"><span style=\"margin-left: 10px\" onclick=\"console.log('send a message')\">Send</span>";
+  
+  $("#ChatEnter").html(enterInputHTML);
+  $("#ChatEnter").show();
+
 }
 
 function removeView(e) {
@@ -234,22 +249,20 @@ function removeView(e) {
 
 }
 
-function initSearch(e) {
-  console.log("initSearch");
-  var searchBox = e.view.element.find("#demos-search");
+function initMainListView(e){
+  console.log("initMainListView");
+//  var scroller = e.view.scroller;
+//  scroller.bind("scroll", function(e) {
+//    /* The result can be observed in the DevTools(F12) console of the browser. */
+//    console.log("top***:",e.scrollTop);
+//    /* The result can be observed in the DevTools(F12) console of the browser. */
+//    console.log("left***:",e.scrollLeft);
+//  });  
+}
 
-  searchBox.on("input", function () {
-    searchForCourse(searchBox.val()); //, product);
-  });
+function initChatListView(e) {
+  console.log("initChatListView");
 
-  searchBox.on("blur", function () {
-    //        if (searchBox.val() == "") {
-    //            hideSearch();
-    //        }
-    searchBox.val("");
-    searchForCourse("");
-    hideSearch();
-  });
 }
 
 var desktop = !kendo.support.mobileOS;

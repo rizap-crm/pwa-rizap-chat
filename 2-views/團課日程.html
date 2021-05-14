@@ -86,6 +86,8 @@
   </script>
 
   <script>
+    $("#toBottom").hide();
+    
     var dataSource;
     console.log("enter 團課日程.html");
     
@@ -397,7 +399,7 @@
 
           //location.reload();
           //reloadCourseNeeded = true;        
-          getCourseData(navDataSource); getCourseHistory(courseHistorySource); 
+          getCourseData(預約課程DataSource); getCourseHistory(courseHistorySource); 
           $("#報名表格").hide();
           $("#團課日程Div").show();          
           $("#報名按鈕"+想報名的courseId).text("已報名");  
