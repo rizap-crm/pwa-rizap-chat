@@ -23,65 +23,8 @@
 </head>
 
 <body id="bodyChat">
-  <!-- Google Tag Manager -->
-  <!-- remarked by Paul Kang
-    <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
-    </noscript>
-    <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
-  -->
-  <!-- End Google Tag Manager -->
-
-  <!-- 
-    若設  data-use-native-scrolling="true"，則 非 mobile mode 可以捲動，但 mobile mode 顯示有問題。
-    若沒設 data-use-native-scrolling="true"，則 非 mobile mode 無法捲動，但 mobile mode 正常可捲動。
-    -->
-
-  <style>
-  
-    .km-on-ios  .km-list > li { /*ListView 裡的 item*/
-/*        background-color: rgb(250,250,250);*/
-/*        background-color: white;*/
-/*        border-radius:10px;*/
-        margin: -0px;
-    }
-
     
-    .km-on-ios .km-header .km-navbar
-    /* for data-title */
-    {
-      background-color: coralbl;
-      /* deeppink; */
-      font-size: 18px;
-    }
-      
-    .km-on-ios .km-header .km-widget,
-    .km-on-ios .km-header .km-view-title {
-      color: white;
-    }
-
-    .NotoSansFont {
-      font-family: 'Noto Sans TC'; 
-    }
-    
-    .預約課程title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-left: 15px;
-
-    }
-
-    .課程名稱 {
-      font-size: 18px;
-      margin-left: 15px;
-
-    }
-      
-  </style>
-
-<!--  <a class="k-icon k-i-search" style="position:absolute; top:50%; right:10px; z-index:1000";font-size:30px></a>-->
-    
-  <div data-role="view" data-title="聊天" style="font-family: 'Noto Sans TC'; height:85%" id="chatDiv" data-layout="" data-show="chatShow" data-init="initChatListView">
+  <div data-role="view" data-title="Eva" style="font-family: 'Noto Sans TC'; height:85%" id="chatDiv" data-layout="" data-show="chatShow" data-init="initChatListView">
     <header data-role="header">
       <div data-role="navbar" id="normalChat" class="km-accent">
 
@@ -92,32 +35,7 @@
       </div>
     </header>
 
-    <div id="已預約課程DivChat" style="margin-top: 0%;">       
-<!--
-    
-      <div id="searchBarChat" style="margin-top:10px">
-        <a class="k-icon k-i-search" style="font-size:20px; color:gray; margin-left:20px" ></a>    
-          
-        <input id="searchTextChat" style="font-size:18px; width:95%; height:50px; margin-left:-32px; border-style:none; background-color:antiquewhite; padding:5px;padding-left:35px; border-radius:10px" type="text" placeholder="搜尋字串" onchange="searchChat(this.value)" />
-        
-        <a id="serachClearChat" class="k-icon k-i-close" style="font-size:20px; color:gray; margin-left:-30px; margin-top:-4px" onclick="clearSearchTextChat()"></a>
-        
-        <script>
-          var inputChat = document.getElementById('searchTextChat');
-          inputChat.onkeydown = function() {
-              var key = event.keyCode || event.charCode;
-              if( key == 8 ){
-                //console.log("backspace pressed", input.value);
-                if (inputChat.value.length==1 /* length=1is tricky */) {
-                  //console.log("empty");
-                  searchChat("");
-                }
-              }
-          };          
-        </script>
-      </div>
-      
--->
+    <div id="chatDiv" style="margin-top: 0%;">       
     
       <ul data-role="listview" data-source="chatDataSource" data-pull-to-refresh="true" data-template="chattemplate"  class="main-menu">
 
@@ -134,9 +52,9 @@
           />          
           <p style="font-size:12px; color: gray; margin-top:-4px" id ='#: message編號 #'> #: message編號 # </p> -->
 
-          <p style="font-size:16px; color: darkslategray; text-align:left; background-color:beige; padding:5px; width:80%; border-radius:5px;" id ='msgContent#:message編號#'>#: message內容 #</p>
+          <p style="font-size:16px; color: darkslategray; text-align:left; background-color:rgba(245,245,220,0.8); padding:5px; width:80%; border-radius:5px;" id ='msgContent#:message編號#'>#: message內容 #</p>
 
-          <p style="font-size:12px; color: gray; float: left; margin-top:-8px;" id ='msgTime#: message編號#'>#: message時間 #</p>
+          <p style="font-size:12px; color: lightgray; float: left; margin-top:-8px;" id ='msgTime#: message編號#'>#: message時間 #</p>
 
           </div>
 
@@ -146,209 +64,7 @@
      </div>
   </div>
   
-<!--  <h2 style="position: absolute; bottom: 50; left: 0" id="deleteMeChat">aaa</h2>-->
-
-  <script>  
-      chatDataSource = new kendo.data.DataSource({
-        // 使用 data 的方法一
-//          data: [
-//            { "message編號": '0001',
-//              "messageType": 'text',
-//              "message內容": 'Hello',
-//              "發送者":  'notMe',   
-//              "message時間": '2021/05/13 10:59',
-//              "message圖片":  '../btn.png',
-//            },
-//            { "message編號": '0002',
-//              "messageType": 'img',         
-//              "message內容": 'What can I help you? hdjkhdksa khjdaksljdlajsda kjdsalkdjladja kjldsldjalj',
-//              "發送者":  'Me',   
-//              "message時間": '2021/05/13 11:02',
-//              "message圖片":  '../dog.png',
-//            },               
-//            
-//          ],
-
-        // 使用 data 的方法二, transport
-        transport: {
-          read: function (data) { getChatData(chatDataSource);  }
-        },
-      //  sort: {
-      //    field: "課程名稱",
-      //    dir: "asc"
-      //  },
-        requestStart: function () {
-          kendo.ui.progress($("#loading"), true);
-        },
-        requestEnd: function () {
-          kendo.ui.progress($("#loading"), false);
-        },
-
-        schema: {
-          total: function () {
-//            console.log("scheme total");
-//            取得經緯度();    
-            return 77;
-          }
-        },
-        serverPaging: true,
-        pageSize: 40,
-        //group: { field: "section" }
-      });
-    
-    var messages=[];
-    var matchMsgs=[];
-    function getChatData(data){
-      
-      if ($("#searchBar").css("display")=="block") {
-        chatDataSource.success(matchMsgs); 
-        for (var i=0; i< matchMsgs.length; i++){
-          const msgLength = matchMsgs[i].message內容.length;
-          //console.log(msgLength);
-
-          //data.add(messages[i]);
-
-          if (matchMsgs[i].發送者 == 'Me') {
-            const msgId = "#msgContent"+matchMsgs[i].message編號;
-            const msgTimeId = "#msgTime"+matchMsgs[i].message編號;
-
-
-            $(msgId).css("text-align", "right");
-            $(msgId).css("margin-left","20%");
-            $(msgId).css("background", "aqua");
-            $(msgTimeId).css("float","right");
-
-          }
-        }  
-        setTimeout( function() {scrollToBottom("chatListView");}, 1);
-        return;
-      }
-        
-      
-      console.log("getChatData");
-      messages = [
-        { "message編號": '0001',
-          "messageType": 'text',
-          "message內容": 'Hello',
-          "發送者":  'notMe',   
-          "message時間": '2021/05/13 10:59',
-          "message圖片":  '../btn.png',
-        },
-        { "message編號": '0002',
-          "messageType": 'img',         
-          "message內容": 'What can I help you? hdjkhdksa khjdaksljdlajsda kjdsalkdjladja kjldsldjalj',
-          "發送者":  'Me',   
-          "message時間": '2021/05/13 11:02',
-          "message圖片":  '../dog.png',
-        }, 
-        { "message編號": '0003',
-          "messageType": 'text',
-          "message內容": 'I need to buy a car.',
-          "發送者":  'notMe',   
-          "message時間": '2021/05/13 11:28',
-          "message圖片":  '../btn.png',
-        },
-        { "message編號": '0004',
-          "messageType": 'img',         
-          "message內容": 'What type of car do you want?',
-          "發送者":  'Me',   
-          "message時間": '2021/05/13 11:31',
-          "message圖片":  '../dog.png',
-        },   
-        { "message編號": '0005',
-          "messageType": 'text',
-          "message內容": 'Hello',
-          "發送者":  'notMe',   
-          "message時間": '2021/05/13 10:59',
-          "message圖片":  '../btn.png',
-        },
-        { "message編號": '0006',
-          "messageType": 'img',         
-          "message內容": 'What can I help you? hdjkhdksa khjdaksljdlajsda kjdsalkdjladja kjldsldjalj',
-          "發送者":  'Me',   
-          "message時間": '2021/05/13 11:02',
-          "message圖片":  '../dog.png',
-        }, 
-        { "message編號": '0007',
-          "messageType": 'text',
-          "message內容": 'I need to buy a car.',
-          "發送者":  'notMe',   
-          "message時間": '2021/05/13 11:28',
-          "message圖片":  '../btn.png',
-        },
-        { "message編號": '0008',
-          "messageType": 'img',         
-          "message內容": 'What type of car do you want?',
-          "發送者":  'Me',   
-          "message時間": '2021/05/13 11:31',
-          "message圖片":  '../dog.png',
-        },
-        { "message編號": '0009',
-          "messageType": 'text',
-          "message內容": 'Hello',
-          "發送者":  'notMe',   
-          "message時間": '2021/05/13 10:59',
-          "message圖片":  '../btn.png',
-        },
-        { "message編號": '0010',
-          "messageType": 'img',         
-          "message內容": 'What can I help you? hdjkhdksa khjdaksljdlajsda kjdsalkdjladja kjldsldjalj',
-          "發送者":  'Me',   
-          "message時間": '2021/05/13 11:02',
-          "message圖片":  '../dog.png',
-        }, 
-        { "message編號": '0011',
-          "messageType": 'text',
-          "message內容": 'I need to buy a car.',
-          "發送者":  'notMe',   
-          "message時間": '2021/05/13 11:28',
-          "message圖片":  '../btn.png',
-        },
-        { "message編號": '0012',
-          "messageType": 'img',         
-          "message內容": 'What type of car do you want?',
-          "發送者":  'Me',   
-          "message時間": '2021/05/13 11:31',
-          "message圖片":  '../dog.png',
-        },        
-      ];     
-    
-      //console.log(messages);
-
-      data.success(messages);
-      
-      for (var i=0; i< messages.length; i++){
-        const msgLength = messages[i].message內容.length;
-        //console.log(msgLength);
-
-        //data.add(messages[i]);
-
-        if (messages[i].發送者 == 'Me') {
-          const msgId = "#msgContent"+messages[i].message編號;
-          const msgTimeId = "#msgTime"+messages[i].message編號;
-
-
-          $(msgId).css("text-align", "right");
-          $(msgId).css("margin-left","20%");
-          $(msgId).css("background", "aqua");
-          $(msgTimeId).css("float","right");
-
-        }
-      }  
-      setTimeout( function() {scrollToBottom("chatListView");}, 1);
-    }
-    
-    function chatShow(){
-      $("#chatTypeInput").show();
-      $(".km-on-ios .km-list > li").css("border-width", "0px");
-      
-    }
-    
-    function showSearchBar(){
-      $("#searchBar").show();
-      $("#searchText").val("");
-      $("#searchText").focus();
-    }
+  <script>      
   </script>
 
 </body>

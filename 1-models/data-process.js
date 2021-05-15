@@ -63,32 +63,16 @@ var isAndroid = kendo.support.mobileOS.android;
 })
 
 searchDataSource = 預約課程DataSource;
-var indexForTest=0;
+//var indexForTest=0;
 var dataTemp=[];
 
 function get預約課程(data) {
   console.log("prepare data for 預約課程ListView");
   
-  for (var i=0; i < inCourse.length; i++){
+  for (var i=0; i< inCourse.length; i++){
+    dataTemp.push(inCourse[i]);
+  }  
 
-        var 課程圖片Url = ( inCourse[i][11] !="")?inCourse[i][11]:"picPlaceholder.png";
-        var courseTitle = {
-          "課程編號": inCourse[i][0]+"-"+indexForTest++,              
-          "課程名稱": inCourse[i][1],
-          "老師時間": inCourse[i][2] + " | " + inCourse[i][3], 
-          "課程費用": inCourse[i][5],  
-          "課程圖片": 課程圖片Url,
-          "繳費狀況": "未繳費",
-          "繳費狀況顏色": "coral",              
-          "url": "2-views/courseDetail.html?courseId=" + courseData[i][0],
-          "section": "A"             
-        };   
-
-        dataTemp.push(courseTitle);
-
-  };
-
-  console.log(dataTemp, length);
   data.success(dataTemp.slice().reverse()); //加上 slice() 才不會改變 dataTemp
 
   if (dataTemp.length==0) {
@@ -108,20 +92,27 @@ function mainShow(e) {
 
   $("#chatTypeInput").hide();
   $("#searchBar").hide();
-  $(".km-on-ios .km-list > li").css("border-width", "1px");
+  $(".km-on-ios .km-list > li").css("border-width", "2px");
+  
+  $(".km-nova .km-content").css("background-image", "url('./equipBg.png')");
+  $(".km-on-ios .km-list > li").css("background", "rgba(155,155,155, 0.5)");
   
   if (inCourse.length == 0) setTimeout(function() {$("#mainTitle").text("無預約課程");}, 10);
 }
-
-function chatShow(e) {
-  console.log("chat page showed");
-
-  const enterInputHTML = "<hr><input id=\"chatTypeInputText\" type=\"text\" class=\"NotoSansFont\" placeholder=\"Type here ...\" style=\"border-width:0px;margin-left:20px; background:aqua;padding:10px; border-radius:10px; width:80%\"><span style=\"margin-left: 10px\" onclick=\"console.log('send a message')\">Send</span>";
-  
-  $("#chatTypeInput").html(enterInputHTML);
-  $("#chatTypeInput").show();
-
-}
+//
+//function chatShow(e) {
+//  console.log("chat page showed");
+//
+//  const enterInputHTML = "<hr><input id=\"chatTypeInputText\" type=\"text\" class=\"NotoSansFont\" placeholder=\"Type here ...\" style=\"border-width:0px;margin-left:20px; background:aqua;padding:10px; border-radius:10px; width:80%\"><span style=\"margin-left: 10px\" onclick=\"console.log('send a message')\">Send</span>";
+//  
+//  setTimeout(function(){ 
+//    $(".km-nova .km-content").css("background-image", "url('./mtgBg.png')");
+//    console.log("aaa");
+//  }, 1000);
+//  
+//  $("#chatTypeInput").html(enterInputHTML);
+//  $("#chatTypeInput").show();
+//}
 
 function removeView(e) {
   //console.log("removeView", e);  
@@ -148,7 +139,7 @@ function initMainListView(e){
 //    console.log("top***:",e.scrollTop);
 //    /* The result can be observed in the DevTools(F12) console of the browser. */
 //    console.log("left***:",e.scrollLeft);
-//  });  
+//  });   
 }
 
 var chatListViewScrollTop;
@@ -165,6 +156,7 @@ function initChatListView(e) {
 //      $("#toBottom").show();
 //    }
 //  });
+  
 }
 
 var desktop = !kendo.support.mobileOS;
@@ -203,7 +195,7 @@ function searchChat(searchFor){
 
       $(msgId).css("text-align", "right");
       $(msgId).css("margin-left","20%");
-      $(msgId).css("background", "aqua");
+      $(msgId).css("background", "rgba(0,255,255,0.8)");
       $(msgTimeId).css("float","right");
 
     }
@@ -276,7 +268,124 @@ function search已報名課程(searchFor){
   });
 }
 
+// for index2.html
+chatDataSource = new kendo.data.DataSource({
+        // 使用 data 的方法一
+//          data: [
+//            { "message編號": '0001',
+//              "messageType": 'text',
+//              "message內容": 'Hello',
+//              "發送者":  'notMe',   
+//              "message時間": '2021/05/13 10:59',
+//              "message圖片":  '../btn.png',
+//            },
+//            { "message編號": '0002',
+//              "messageType": 'img',         
+//              "message內容": 'What can I help you? hdjkhdksa khjdaksljdlajsda kjdsalkdjladja kjldsldjalj',
+//              "發送者":  'Me',   
+//              "message時間": '2021/05/13 11:02',
+//              "message圖片":  '../dog.png',
+//            },               
+//            
+//          ],
 
+        // 使用 data 的方法二, transport
+        transport: {
+          read: function (data) { getChatData(chatDataSource);  }
+        },
+      //  sort: {
+      //    field: "課程名稱",
+      //    dir: "asc"
+      //  },
+        requestStart: function () {
+          kendo.ui.progress($("#loading"), true);
+        },
+        requestEnd: function () {
+          kendo.ui.progress($("#loading"), false);
+        },
+
+        schema: {
+          total: function () {
+//            console.log("scheme total");
+//            取得經緯度();    
+            return 77;
+          }
+        },
+        serverPaging: true,
+        pageSize: 40,
+        //group: { field: "section" }
+      });
+    
+    var matchMsgs=[];
+    function getChatData(data){
+      
+      if ($("#searchBar").css("display")=="block") {
+        chatDataSource.success(matchMsgs); 
+        for (var i=0; i< matchMsgs.length; i++){
+          const msgLength = matchMsgs[i].message內容.length;
+          //console.log(msgLength);
+
+          //data.add(messages[i]);
+
+          if (matchMsgs[i].發送者 == 'Me') {
+            const msgId = "#msgContent"+matchMsgs[i].message編號;
+            const msgTimeId = "#msgTime"+matchMsgs[i].message編號;
+
+
+            $(msgId).css("text-align", "right");
+            $(msgId).css("margin-left","20%");
+            $(msgId).css("background", "rgba(0,255,255,0.8)");
+            $(msgTimeId).css("float","right");
+
+          }
+        }  
+        setTimeout( function() {scrollToBottom("chatListView");}, 1);
+        return;
+      }
+        
+      
+      console.log("getChatData");
+
+      data.success(messages);
+      
+      for (var i=0; i< messages.length; i++){
+        const msgLength = messages[i].message內容.length;
+        //console.log(msgLength);
+
+        //data.add(messages[i]);
+
+        if (messages[i].發送者 == 'Me') {
+          const msgId = "#msgContent"+messages[i].message編號;
+          const msgTimeId = "#msgTime"+messages[i].message編號;
+
+
+          $(msgId).css("text-align", "right");
+          $(msgId).css("margin-left","20%");
+          $(msgId).css("background", "rgba(0,255,255,0.8)");
+          $(msgTimeId).css("float","right");
+
+        }
+      }  
+      setTimeout( function() {
+        //scrollToBottom("chatListView");
+        $(".km-on-ios .km-list > li").css("background", "transparent");
+      }, 1);
+    }
+    
+    function chatShow(){
+      $("#chatTypeInput").show();
+      $(".km-on-ios .km-list > li").css("border-width", "0px");
+      $(".km-on-ios .km-list > li").css("background", "transparent");
+      $(".km-nova .km-content").css("background-image", "url('./mtgBg.png')"); 
+      
+    }
+    
+    function showSearchBar(){
+      $("#searchBar").show();
+      $("#searchText").val("");
+      $("#searchText").focus();
+    }
+// end of for index2.html
 
 window.app = new kendo.mobile.Application($(document.body), {
   layout: "courseDiv",

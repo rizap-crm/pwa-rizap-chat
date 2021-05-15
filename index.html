@@ -39,26 +39,34 @@
 
   <style>
   
-    .km-on-ios  .km-list > li { /*ListView 裡的 item*/
-/*        background-color: rgb(250,250,250);*/
-/*        background-color: white;*/
-/*        border-radius:10px;*/
-        margin: -0px;
-      border-width: 1px; /* $(".km-on-ios .km-list > li").css("border-width", "0px") */
+    .km-nova .km-content { /*ListView 裡的 content/
+/*      background-color: rgb(250,250,0);*/
+      background-image: url("./equipBg.png");
+      background-size: 100% 100%;
     }
 
+    .km-on-ios  .km-list > li { /*ListView 裡的 item*/
+      background-color: rgba(155,155,155, 0.5);
+      border-radius:10px;
+      margin: 10px;
+      border-width: 0px; /* 可用 $(".km-on-ios .km-list > li").css("border-width", "0px") */
+      /*border-color: #B69B41; */
+      border-color: transparent; 
+      
+      
+    }
     
     .km-on-ios .km-header .km-navbar
     /* for data-title */
     {
-      background-color: coralbl;
+      background-color: black;
       /* deeppink; */
       font-size: 18px;
     }
       
     .km-on-ios .km-header .km-widget,
     .km-on-ios .km-header .km-view-title {
-      color: white;
+      color: #B69B41;
     }
 
     .NotoSansFont {
@@ -87,14 +95,43 @@
     .km-chat:after,
     .km-chat:before
     {
+      color: #B69B41;
       content: "\e092";
+      font-size: 25px;
+    }  
+
+    
+    .km-search:after,
+    .km-search:before
+    {
+      color: #B69B41;
+      font-weight: 900;
     }
     
     .km-no-search:after,
-    .km-bo-search:before
+    .km-no-search:before
     {
+      color: #B69B41;
       content: "\e011";
-    }     
+    }
+    
+/*  
+    .km-icon .km-back .km-notext:before
+    {
+      color: #B69B41;      
+    }
+*/
+    
+    .km-back:after /* :before 必須用以下 *複雜* 的 selector */
+    {
+      color: #B69B41;
+      font-weight: 900;
+    }
+    
+    .km-nova .km-accent.k-toolbar, .km-nova .km-accent.k-toolbar .km-back:before, .km-nova .km-accent.km-navbar, .km-nova .km-accent.km-navbar .km-back:before, .km-nova .km-accent.km-navbar .km-button, .km-nova .km-accent.km-tabstrip 
+    {
+      color: #B69B41;
+    }    
   </style>
  
   <!-- toBottom is displayed and used in index2.html -->
@@ -135,15 +172,20 @@
   </div>
 
   <!-- chatTypeInput is displayed and used in index2.html -->
-  <div id="chatTypeInput" style="position:absolute; bottom: 5px; width:100%;">
-    <hr>
+  <div id="chatTypeInput" style="position:absolute; bottom: 5px; width:100%; background:gray; z-index:1000">
 
-    <a class="k-icon k-i-image" style="font-size:30px; float:left; margin:0 10px 10px 10px" onclick="console.log('select photo')" ></a>
+    <a class="k-icon k-i-image" style="font-size:30px; float:left; margin:5px 10px 10px 10px; color:lightgray" onclick="console.log('select photo')" ></a>
 
-    <img src="./emoji.png" style="float:left; width:26px; margin:40px 10px 0px -38px" onclick="console.log('select emoji')" />  
+<!--    <img src="./emoji.png" style="float:left; width:26px; margin:40px 10px 0px -38px" onclick="console.log('select emoji')" />  -->
+    <img src="./emoji-lightgray.png" style="float:left; width:26px; margin:8px" onclick="console.log('select emoji')" />  
    
-    <textarea rows="3" placeholder="Type here ..." style="font-size:15px; padding:10px;border-width:0px;margin-left:0px; width:65%;background:aqua;border-radius:10px; resize:none"></textarea>
-    <span style="float:right;margin-right:20px; background-color: darkorchid; color: aliceblue; padding:2px 8px;border-radius:25px" onclick="console.log('send message')">Send</span>
+    <span style="float:right; margin: 8px 13px -30px 0px; padding:5px; background:blue; color:lightgray; border-radius:5px" onclick="console.log('send message')">Send</span>
+       
+<!--    <textarea rows="3" placeholder="Type here ..." style="font-size:15px; padding:10px;border-width:0px;margin-left:0px; margin-top:30px; width:65%;background:aqua;border-radius:10px; resize:none"></textarea>-->
+    <textarea rows="3" placeholder="Type here ..." style="font-size:15px; padding:10px;border-width:0px;margin-left:-80px; margin-top:40px; width:93%;background:aqua;border-radius:10px; resize:none"></textarea>
+    
+<!--    <span style="float:right;margin-right:20px; margin-top:5px; background-color: darkorchid; color: aliceblue; padding:2px 8px;border-radius:25px;" onclick="console.log('send message')">Send</span>-->
+
   </div>
   
   
@@ -152,7 +194,7 @@
     <header data-role="header">
       <div data-role="navbar" id="normal" class="km-accent">
 
-        <a data-align="right" data-role="button" href="index2.html" data-rel="" data-icon="chat" style="font-size:30px;padding: 10px;margin-top:-55px"></a>
+        <a data-align="right" data-role="button" href="index2.html" data-rel="" data-icon="chat" ></a>
         
         <span data-role="view-title" id="mainTitle"></span>
              
@@ -161,14 +203,13 @@
 
     <div id="已預約課程Div" style="margin-top: 0%">       
      
-      <ul data-role="listview" data-source="預約課程DataSource" data-pull-to-refresh="true" data-template="nav-template" data-header-template="" class="main-menu" style="margin-top:10px">
+      <ul data-role="listview" data-source="預約課程DataSource" data-pull-to-refresh="true" data-template="nav-template" data-header-template="" data-messages='{ "releaseTemplate": "<div style=\"color:white\" >往下拉更新</div>" }' class="main-menu" style="margin-top:10px">
 
         <script type="text/x-kendo-template" id="nav-template">          
-          <img src="#: 課程圖片 #" width="70" height="70" style="float:left;margin-right:10px"/>          
-          <p style="font-size:12px; color: gray; margin-top:-8px"> #: 課程編號 # </p>
-          <p style="font-size:16px; color: darkslategray; margin-top:-10px; font-weight:bold">#: 課程名稱 # </p>
-          <p style="font-size:12px; color: gray; margin-top:-10px">#: 老師時間 # </p>
-          <p style="font-size:12px; color: gray; margin-top:-10px;margin-bottom:-25px">#: 課程費用 # </p> 
+          <img src="#: 教練圖檔 #" width="70" height="70" style="float:left;margin-right:10px; border-radius:50%"/>        
+          <p style="font-size:16px; color: rgb(230,230,230); margin-top:-5px; font-weight:bold">#: 課程名稱 # </p>          
+          <p style="font-size:14px; color: rgb(200,200,200); margin-top:-5px">#: 教練姓名 # | #: 上課地點 #  </p>
+          <p style="font-size:14px; color: rgb(200,200,200); margin-top:-5px;margin-bottom:-25px">#: 上課時間 # </p> 
         </script>
 
       </ul>

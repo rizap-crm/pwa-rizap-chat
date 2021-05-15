@@ -60,10 +60,8 @@ function readCourses(){
 //  courseData = JSON.parse(courseDataStr);
 //  courseMember = JSON.parse(courseMemberStr);
   userId = "userId=U8570ed5006325d504933612308d0fddf".split("=");
-  
-  notInCourse=[];
-  inCourse=[];
-  myHistory=[];     
+
+  inCourse=[]; 
   var attended=false;
   var isNow=false;
   var inHistory=false; 
@@ -83,9 +81,7 @@ function readCourses(){
 
     inHistory = false;
 
-    if (!attended && isNow)     notInCourse.push(course[0]);
-    if (attended  && isNow)     inCourse.push(course[0]);        
-    if (attended  && inHistory) myHistory.push(course[0]);
+
   });  
 };
 
