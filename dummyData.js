@@ -45,3 +45,5 @@ var messages = [
   },   
           
 ]; 
+
+var msgNumber=4;

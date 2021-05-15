@@ -40,21 +40,12 @@
       <ul data-role="listview" data-source="chatDataSource" data-pull-to-refresh="true" data-template="chattemplate"  class="main-menu">
 
         <script type="text/x-kendo-template" id="chattemplate" >
-          <!-- <a class="reply km-primary km-button-right"
-            style="color: white" data-role="button"
-            onclick="messageBtn('#:message編號#')" 
-            id = "按鈕#: message編號 #"
-          >按鈕</a>
 
-          <div style="text-align:left;">
-          <img src="#: message圖片 #" width="70" height="70" style="float:left;margin-right:10px;border-radius:50%"
-            onclick="messageBtn('#: message圖片 #')"
-          />          
-          <p style="font-size:12px; color: gray; margin-top:-4px" id ='#: message編號 #'> #: message編號 # </p> -->
+          <div>
+          
+            <p style="font-size:16px; color: darkslategray; text-align:left; background-color:rgba(245,245,220,0.8); padding:5px; width:80%; border-radius:5px;" id ='msgContent#:message編號#'>#: message內容 #</p>
 
-          <p style="font-size:16px; color: darkslategray; text-align:left; background-color:rgba(245,245,220,0.8); padding:5px; width:80%; border-radius:5px;" id ='msgContent#:message編號#'>#: message內容 #</p>
-
-          <p style="font-size:12px; color: lightgray; float: left; margin-top:-8px;" id ='msgTime#: message編號#'>#: message時間 #</p>
+            <p style="font-size:12px; color: lightgray; float: left; margin-top:-8px;" id ='msgTime#: message編號#'>#: message時間 #</p>
 
           </div>
 
