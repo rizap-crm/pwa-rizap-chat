@@ -339,7 +339,14 @@ chatDataSource = new kendo.data.DataSource({
 
           }
         }  
-        setTimeout( function() {scrollToBottom("chatListView");}, 1);
+        $("#msgContentdummy").css("background", "transparent");
+        $("#msgContentdummy").css("height", "30px");        
+
+        setTimeout( function() {
+          scrollToBottom("chatListView");
+          $(".km-on-ios .km-list > li").css("background", "transparent");
+        }, 1);
+        
         return;
       }
         
@@ -366,8 +373,12 @@ chatDataSource = new kendo.data.DataSource({
 
         }
       }  
+      
+      $("#msgContentdummy").css("background", "transparent");
+      $("#msgContentdummy").css("height", "45px");
+      
       setTimeout( function() {
-        //scrollToBottom("chatListView");
+        scrollToBottom("chatListView");
         $(".km-on-ios .km-list > li").css("background", "transparent");
       }, 1);
     }

@@ -132,6 +132,14 @@
     {
       color: #B69B41;
     }    
+    
+    /* 以下解除 kendo 對 modalview 的強制自動設定 position, top, left */
+    .km-modalview-root > div.k-animation-container{
+      position:absolute !important;
+      top:0px !important;
+      left:0px !important;
+    }
+    
   </style>
  
   <!-- toBottom is displayed and used in index2.html -->
@@ -172,7 +180,7 @@
   </div>
 
   <!-- chatTypeInput is displayed and used in index2.html -->
-  <div id="chatTypeInput" style="position:absolute; bottom: 5px; width:100%; background:gray; z-index:1000">
+  <div id="chatTypeInput" style="position:absolute; bottom: 5px; width:100%; background:rgba(128,128,128,0.8) ; z-index:1000">
 
     <a class="k-icon k-i-image" style="font-size:30px; float:left; margin:5px 10px 10px 10px; color:lightgray" onclick="alert('select photo')" ></a>
 
@@ -237,6 +245,8 @@
 
     var show到底 = false;
     var showInput = false;
+    
+    var chatClickEvent;
       
 
     

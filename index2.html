@@ -24,7 +24,7 @@
 
 <body id="bodyChat">
     
-  <div data-role="view" data-title="Eva" style="font-family: 'Noto Sans TC'; height:85%" id="chatDiv" data-layout="" data-show="chatShow" data-init="initChatListView">
+  <div data-role="view" data-title="Eva" style="font-family: 'Noto Sans TC'; height:100%" id="chatDiv" data-layout="" data-show="chatShow" data-init="initChatListView">
     <header data-role="header">
       <div data-role="navbar" id="normalChat" class="km-accent">
 
@@ -34,10 +34,22 @@
         <span data-role="view-title"></span>
       </div>
     </header>
-
-    <div id="chatDiv" style="margin-top: 0%;">       
+              
+    <div id="messagesDiv" style="margin-top: 0%;">       
     
-      <ul data-role="listview" data-source="chatDataSource" data-pull-to-refresh="true" data-template="chattemplate"  class="main-menu">
+      <ul data-role="listview" data-source="chatDataSource" data-pull-to-refresh="true" data-template="chattemplate" class="main-menu" data-click="chatClickAt">
+        <script>
+          function chatClickAt(e){
+            //console.log(e);
+            chatClickEvent = e;
+            var chatOffset = chatClickEvent.target.offset();
+            var chatHeight = chatClickEvent.target.height();
+            console.log(chatClickEvent.dataItem.message內容, " offset:", chatOffset, " height", chatHeight);            
+            $("#modalview-img").kendoMobileModalView("open");
+            $("#modalview-img").css("top", chatOffset.top+ chatHeight+12);
+            $("#modalview-img").css("left", chatOffset.left);
+          }
+        </script>
 
         <script type="text/x-kendo-template" id="chattemplate" >
 
@@ -55,6 +67,65 @@
      </div>
   </div>
   
+
+    <div data-role="modalview" id="modalview-img" style="width: 70%; ">
+  <!--
+        <header data-role="header" >
+            <div data-role="navbar" style="height:30px; background:#F5404C;">
+                <span style="font-size:18px;float:left; margin-top:-7px; margin-left:45%" id="aaa">圖片</span>
+                <a data-click="closeModalViewLogin" data-role="button" data-align="right">Close</a>
+            </div>
+        </header>
+  -->
+
+      <div style="background:rgba(128,128,128,0.8); border-radius:5px" onclick="closeImg()">
+<!--         <a class="k-icon k-i-close" style="font-size:20px; float:right"></a> -->
+<!--         <img src="./equipBg.png" style="width: 100%; height:100%;" />-->
+<!--
+        <ul data-role="listview" data-style="inset">
+          <li><label for="username">Username: <input type="text" id="username" /></label></li>
+          <li><label for="password">Password: <input type="password" id="password" /></label></li>
+        </ul>
+-->
+      <a data-click="closeModalView" id="modalview-reply" type="button" data-role="button" style="color:white;background-color:transparent; border-color: transparent">回覆此訊息</a>
+      <a data-click="closeModalView" id="modalview-cancel" type="button" data-role="button" style="margin:5px; padding:5px">取消</a>
+   
+      </div>
+
+      <script>
+        var modalEvent;
+        //$("#modalview-img").kendoMobileModalView("open")
+        function closeImg(){
+          //$("#modalview-img").kendoMobileModalView("close")
+        }
+        
+        function closeModalView(e){
+          modalEvent=e;          
+          console.log(modalEvent.button.text());
+          $("#modalview-img").kendoMobileModalView("close")
+        }
+      </script>
+    </div>    
+
+  
+<!--
+  <div data-role="modalview" id="modalview-login" style="width: 90%; margin-top:0px">
+    <div data-role="header">
+      <div data-role="navbar">
+        <span>Login</span>
+        <a data-click="closeModalViewLogin" data-role="button" data-align="right">Cancel</a>
+      </div>
+    </div>
+
+    <ul data-role="listview" data-style="inset">
+      <li><label for="username">Username: <input type="text" id="username" /></label></li>
+      <li><label for="password">Password: <input type="password" id="password" /></label></li>
+    </ul>
+    <a data-click="closeModalViewLogin" id="modalview-login-button" type="button" data-role="button">Login</a>
+    <a data-click="closeModalViewLogin" id="modalview-reg-button" type="button" data-role="button">Register</a>
+  </div>
+-->
+      
   <script>      
   </script>
 
