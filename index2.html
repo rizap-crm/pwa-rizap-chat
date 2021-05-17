@@ -42,19 +42,35 @@
           function chatClickAt(e){
             //console.log(e);
             chatClickEvent = e;
-            var chatOffset = chatClickEvent.target.offset();
-            var chatHeight = chatClickEvent.target.height();
-            console.log(chatClickEvent.dataItem.message內容, " offset:", chatOffset, " height", chatHeight);            
-            $("#modalview-img").kendoMobileModalView("open");
-            $("#modalview-img").css("top", chatOffset.top+ chatHeight+12);
-            $("#modalview-img").css("left", chatOffset.left);
+            
+            if (chatClickEvent.dataItem.messageType=="emoji") {
+              console.log("why do you want to tocuh at an emoji?");
+              return
+            }
+            
+            if (chatClickEvent.dataItem.messageType=="picture") {
+              console.log("message is a picture");
+              
+              $("#viewPicture").attr("src", chatClickEvent.dataItem.message圖片);
+              
+              // 不用 setTimeout，圖片會閃退
+              setTimeout(function() {$("#modalview-img").kendoMobileModalView("open");},1);
+            } else {
+              var chatOffset = chatClickEvent.target.offset();
+              var chatHeight = chatClickEvent.target.height();
+              console.log(chatClickEvent.dataItem.message內容, " offset:", chatOffset, " height", chatHeight);            
+              $("#modalview-reply").kendoMobileModalView("open");
+              $("#modalview-reply").css("top", chatOffset.top+ chatHeight+12);
+              $("#modalview-reply").css("left", chatOffset.left);
+            }
           }
         </script>
 
         <script type="text/x-kendo-template" id="chattemplate" >
 
           <div>
-          
+            <img src='#: message圖片 #' style="background-color:rgba(255,255,255,0.8); width:80%; border-radius:5px;" id ='msgPicture#:message編號#' />
+            
             <p style="font-size:16px; color: darkslategray; text-align:left; background-color:rgba(245,245,220,0.8); padding:5px; width:80%; border-radius:5px;" id ='msgContent#:message編號#'>#: message內容 #</p>
 
             <p style="font-size:12px; color: lightgray; float: left; margin-top:-8px;" id ='msgTime#: message編號#'>#: message時間 #</p>
@@ -67,47 +83,47 @@
      </div>
   </div>
   
+  <div data-role="modalview" id="modalview-img" style="width: 100%; height: 100%">
+    <div style="background:rgba(128,128,128,0.8); border-radius:5px" onclick="closeImg()">
+      <a class="k-icon k-i-close" style="font-size:20px; float:right"></a> 
+<!--        <img src="./equipBg.png" style="width: 100%; height:100%;" />-->
+      <img id="viewPicture" src='https://via.placeholder.com/800x1350' style="width: 100%; height:100%;" />
+    </div>
 
-    <div data-role="modalview" id="modalview-img" style="width: 70%; ">
-  <!--
-        <header data-role="header" >
-            <div data-role="navbar" style="height:30px; background:#F5404C;">
-                <span style="font-size:18px;float:left; margin-top:-7px; margin-left:45%" id="aaa">圖片</span>
-                <a data-click="closeModalViewLogin" data-role="button" data-align="right">Close</a>
-            </div>
-        </header>
-  -->
+    <script>
+      var modalEvent;
+      //$("#modalview-img").kendoMobileModalView("open")
+      function closeImg(){
+        $("#modalview-img").kendoMobileModalView("close")
+      }
 
-      <div style="background:rgba(128,128,128,0.8); border-radius:5px" onclick="closeImg()">
-<!--         <a class="k-icon k-i-close" style="font-size:20px; float:right"></a> -->
-<!--         <img src="./equipBg.png" style="width: 100%; height:100%;" />-->
-<!--
-        <ul data-role="listview" data-style="inset">
-          <li><label for="username">Username: <input type="text" id="username" /></label></li>
-          <li><label for="password">Password: <input type="password" id="password" /></label></li>
-        </ul>
--->
-      <a data-click="closeModalView" id="modalview-reply" type="button" data-role="button" style="color:white;background-color:transparent; border-color: transparent">回覆此訊息</a>
-      <a data-click="closeModalView" id="modalview-cancel" type="button" data-role="button" style="margin:5px; padding:5px">取消</a>
-   
-      </div>
+      function closeModalViewxx(e){
+        modalEvent=e;          
+        console.log(modalEvent.button.text());
+        $("#modalview-img").kendoMobileModalView("close")
+      }
+    </script>
+  </div>    
 
-      <script>
-        var modalEvent;
-        //$("#modalview-img").kendoMobileModalView("open")
-        function closeImg(){
-          //$("#modalview-img").kendoMobileModalView("close")
-        }
-        
-        function closeModalView(e){
-          modalEvent=e;          
-          console.log(modalEvent.button.text());
-          $("#modalview-img").kendoMobileModalView("close")
-        }
-      </script>
-    </div>    
 
-  
+  <div data-role="modalview" id="modalview-reply" style="width: 70%; ">
+    <div style="background:rgba(128,128,128,0.8); border-radius:5px">
+      <a data-click="closeReplyModalView" id="modalview-reply" type="button" data-role="button" style="color:white;background-color:transparent; border-color: transparent">回覆此訊息</a>
+      <a data-click="closeReplyModalView" id="modalview-cancel" type="button" data-role="button" style="margin:5px; padding:5px">取消</a>
+
+    </div>
+
+    <script>
+      //var modalEvent;      
+      function closeReplyModalView(e){
+        const modalEvent=e;          
+        console.log(modalEvent.button.text());
+        $("#modalview-reply").kendoMobileModalView("close")
+      }
+    </script>
+  </div>    
+
+    
 <!--
   <div data-role="modalview" id="modalview-login" style="width: 90%; margin-top:0px">
     <div data-role="header">

@@ -360,16 +360,26 @@ chatDataSource = new kendo.data.DataSource({
         //console.log(msgLength);
 
         //data.add(messages[i]);
-
+        
         if (messages[i].發送者 == 'Me') {
-          const msgId = "#msgContent"+messages[i].message編號;
-          const msgTimeId = "#msgTime"+messages[i].message編號;
-
+          const msgId     = "#msgContent"+messages[i].message編號;
+          const msgPictId = "#msgPicture"+messages[i].message編號;
+          const msgTimeId = "#msgTime"   +messages[i].message編號;
 
           $(msgId).css("text-align", "right");
           $(msgId).css("margin-left","20%");
           $(msgId).css("background", "rgba(0,255,255,0.8)");
+          $(msgPictId).css("margin-left","20%");
           $(msgTimeId).css("float","right");
+          
+          if (messages[i].messageType == 'picture' || messages[i].messageType == 'emoji' ) {
+            //console.log(msgId);
+            $(msgId).hide();
+            if (messages[i].messageType == 'emoji' ){
+              $(msgPictId).css("width", "80px");
+              $(msgPictId).css("margin-left", "75%");
+            }
+          }          
 
         }
       }  

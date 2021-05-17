@@ -182,15 +182,15 @@
   <!-- chatTypeInput is displayed and used in index2.html -->
   <div id="chatTypeInput" style="position:absolute; bottom: 5px; width:100%; background:rgba(128,128,128,0.8) ; z-index:1000">
 
-    <a class="k-icon k-i-image" style="font-size:30px; float:left; margin:5px 10px 10px 10px; color:lightgray" onclick="alert('select photo')" ></a>
+    <a class="k-icon k-i-image" style="font-size:30px; float:left; margin:5px 10px 10px 10px; color:lightgray" onclick="alert('selecting a photo is not implemeted yet')" ></a>
 
 <!--    <img src="./emoji.png" style="float:left; width:26px; margin:40px 10px 0px -38px" onclick="console.log('select emoji')" />  -->
-    <img src="./emoji-lightgray.png" style="float:left; width:26px; margin:8px" onclick="alert('select emoji')" />  
+    <img src="./emoji-lightgray.png" style="float:left; width:26px; margin:8px" onclick="alert('selecting an emoji is not implemented yet')" />  
         
 <!--    <textarea rows="3" placeholder="Type here ..." style="font-size:15px; padding:10px;border-width:0px;margin-left:0px; margin-top:30px; width:65%;background:aqua;border-radius:10px; resize:none"></textarea>-->
     <textarea id="msgInput" rows="3" placeholder="Type here ..." style="font-size:15px; padding:10px;border-width:0px;margin-left:-80px; margin-top:40px; width:93%;background:aqua;border-radius:10px; resize:none"></textarea>
     
-    <span style="float:right;margin-right:20px; margin-top:-110px; background-color: blue; color: aliceblue; padding:5px 8px;border-radius:25px;" onclick="sendMessage()">Send</span>
+    <span style="float:right;margin-right:20px; margin-top:-110px; background-color: #B69B41; color: aliceblue; padding:5px 8px;border-radius:25px;" onclick="sendMessage()">Send</span>
     
     <script>
       function sendMessage(){
@@ -201,11 +201,32 @@
           console.log("send message:"+$("#msgInput").val());
           $("#msgInput").val("");
         }
+        alert("Sending a message is not implemented yet")
       }
     </script>
 
   </div>
   
+  
+
+ 
+  <div data-role="modalview" id="modalview-adv" style="width:90%; height:90%; top:15%; left:5%">
+    <div style="background:rgba(128,128,128,0.8); border-radius:5px" >
+      <a class="k-icon k-i-close" style="font-size:20px; float:right" onclick="closeAdv()"></a> 
+      <img src="./rizap_advertisement.png" style="width: 100%; height:100%;" />
+    </div>
+
+    <script>
+      var modalEvent;
+      //$("#modalview-adv").kendoMobileModalView("open")
+      function closeAdv(){
+        $("#modalview-adv").kendoMobileModalView("close")
+      }
+
+    </script>
+  </div>    
+
+    
   
   <div data-role="view" data-title="已預約課程" style="font-family: 'Noto Sans TC'; height:100%;" id="courseDiv" data-layout="" data-show="mainShow" data-init="initMainListView">
 
@@ -240,8 +261,13 @@
   <script src="js/prettify.js"></script> 
   
   <script>
-        
-
+            
+    setTimeout( function() {
+      $("#modalview-adv").kendoMobileModalView("open");
+      console.log("aaa");
+    }, 1);
+      
+    setTimeout( function() {$("#modalview-adv").kendoMobileModalView("close")}, 5000)
 
     var show到底 = false;
     var showInput = false;

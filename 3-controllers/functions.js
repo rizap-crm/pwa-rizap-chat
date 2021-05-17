@@ -127,13 +127,16 @@ function clearSearchText(){
 function scrollToBottom(toBottomId){
   console.log(toBottomId)
   const appScroller=app.view().scroller;
-  const scrollDistance= appScroller.height() - appScroller.scrollHeight(); 
-  if (scrollDistance < 0) {
-    console.log(scrollDistance);
-    appScroller.animatedScrollTo(0,scrollDistance);
-    setTimeout(function(){$("#toBottom").hide()}, 1);
-    show到底 = false;
-  }
+  setTimeout( function() {
+    const scrollDistance= appScroller.height() - appScroller.scrollHeight(); 
+    if (scrollDistance < 0) {
+      console.log(scrollDistance);
+      appScroller.animatedScrollTo(0,scrollDistance);
+//      setTimeout(function(){$("#toBottom").hide()}, 1);
+      $("#toBottom").hide();
+      show到底 = false;
+    }
+  }, 100);
 }
 
 function scrollToTop(toBottomId){
